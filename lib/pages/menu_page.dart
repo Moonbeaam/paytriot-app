@@ -48,7 +48,7 @@ class _MenuPageState extends State<MenuPage> {
       Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadIdPage()));
     },
     child: const Text(
-      'Add Balance',
+      'Cash In',
     ),
   );
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/cash_in_page.dart';
 
 class ReadIdPage extends StatefulWidget {
   @override
@@ -12,18 +13,26 @@ class ReadIdPage extends StatefulWidget {
 class _ReadIdPageState extends State<ReadIdPage> {
   String studNum = '';
   String displayText='';
+  String balText='';
   late StudAcc studentAccount;
   final box = GetStorage();
 
   void getStudAcc() async {
     try {
-      final result = await StudAccDB.instance.readAcc(box.read('studNum')); // Use your readAcc function
-      setState(() {
-        studentAccount = result;
-        displayText = studentAccount.firstName;
-      });
+        final result = await StudAccDB.instance.readAcc(box.read('studNum')); // Use your readAcc function
+        if(result!=null){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>CashInPage()));
+        }
+        else{
+          setState(() {
+            displayText = "asdasd";
+          });
+        }
+
     } catch (e) {
-      displayText= "not found";
+      setState(() {
+        displayText = Exception(e).toString();
+      });
     }
   }
   void getStudNum() async {

@@ -21,6 +21,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
       lastName: lastName,
       firstName: firstName,
       middleName: middleName,
+      balance:  0,
     );
     StudAccDB.instance.create(studAcc);
   }

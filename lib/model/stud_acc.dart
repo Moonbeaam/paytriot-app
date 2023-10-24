@@ -19,7 +19,7 @@ class StudAcc{
   final String lastName;
   final String firstName;
   final String middleName;
-  final int? balance;
+  final int balance;
 
   const StudAcc({
     this.id,
@@ -27,7 +27,7 @@ class StudAcc{
     required this.lastName,
     required this.firstName,
     required this.middleName,
-    this.balance,
+    required this.balance,
   });
 
   StudAcc copy({
@@ -53,7 +53,7 @@ class StudAcc{
     lastName: json[StudAccFields.lastName] as String,
     firstName: json[StudAccFields.firstName] as String,
     middleName: json[StudAccFields.middleName] as String,
-    balance: json[StudAccFields.balance] as int?,
+    balance: json[StudAccFields.balance] as int,
   );
 
   Map<String, Object?> toJson()=>{

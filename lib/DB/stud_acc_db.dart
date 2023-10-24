@@ -62,6 +62,17 @@ class StudAccDB{
     }
   }
 
+  Future<void> updateBalance(int newBalance, String studNum) async {
+    final Database db = await instance.database;
+
+    // Update the balance column for a specific row with the given id
+    await db.update(
+      tableStudAcc,
+      {StudAccFields.balance: newBalance},
+      where: '${StudAccFields.studNum}= ?',
+      whereArgs: [studNum],
+    );
+  }
   Future close() async{
     final db= await instance.database;
     db.close();

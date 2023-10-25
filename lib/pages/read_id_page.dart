@@ -3,6 +3,7 @@ import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:paytriot/pages/cash_in_page.dart';
+import 'package:paytriot/pages/purchase_page.dart';
 
 class ReadIdPage extends StatefulWidget {
   @override
@@ -21,7 +22,12 @@ class _ReadIdPageState extends State<ReadIdPage> {
     try {
         final result = await StudAccDB.instance.readAcc(box.read('studNum')); // Use your readAcc function
         if(result!=null){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>CashInPage()));
+          if(box.read('action')=='CashIn'){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>CashInPage()));
+          }
+          else if(box.read('action')=='Purchase'){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>PurchasePage()));
+          }
         }
         else{
           setState(() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paytriot/pages/create_acc_page.dart';
 import 'package:paytriot/pages/read_id_page.dart';
-
+import 'package:get_storage/get_storage.dart';
 void main() {
 
   runApp(const MyApp());
@@ -28,11 +28,19 @@ class MenuPage extends StatefulWidget {
 
   final String title;
 
+
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
 
 class _MenuPageState extends State<MenuPage> {
+  final box = GetStorage();
+
+  void getAction(String action) async {
+    await GetStorage.init();
+    box.write('action', action).toString();
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadIdPage()));
+  }
 
   Widget buttToCreateAcc() => TextButton(
     onPressed: (){
@@ -43,12 +51,21 @@ class _MenuPageState extends State<MenuPage> {
     ),
   );
 
-  Widget buttToReadID() => TextButton(
+  Widget buttToCashIn() => TextButton(
     onPressed: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadIdPage()));
+      getAction('CashIn');
     },
     child: const Text(
       'Cash In',
+    ),
+  );
+
+  Widget buttToPurchase() => TextButton(
+    onPressed: (){
+      getAction('Purchase');
+    },
+    child: const Text(
+      'Purchase',
     ),
   );
 
@@ -59,11 +76,11 @@ class _MenuPageState extends State<MenuPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-
       body: ListView(
         children:[
           buttToCreateAcc(),
-          buttToReadID()
+          buttToCashIn(),
+          buttToPurchase(),
         ]
       ),
     );

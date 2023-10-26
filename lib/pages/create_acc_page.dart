@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
+import 'package:paytriot/pages/menu_page.dart';
 
 class CreateAccPage extends StatefulWidget {
   @override
-
   State<CreateAccPage> createState() => _CreateAccPageState();
 }
 
@@ -15,13 +15,12 @@ class _CreateAccPageState extends State<CreateAccPage> {
   String middleName = '';
 
   void addStudAcc() async {
-
     final studAcc = StudAcc(
       studNum: studNum,
       lastName: lastName,
       firstName: firstName,
       middleName: middleName,
-      balance:  0,
+      balance: 0,
     );
     StudAccDB.instance.create(studAcc);
   }
@@ -55,7 +54,26 @@ class _CreateAccPageState extends State<CreateAccPage> {
         onChanged: (value) => setState(() => middleName = value),
       );
   Widget button() => TextButton(
-        onPressed: addStudAcc,
+        onPressed: () {
+          addStudAcc();
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => MyApp()));
+                        },
+                        child: const Text('Return to Home Pageasdfasdf'),
+                      ),
+                    ],
+                    title: const Text('Successful!'),
+                    contentPadding: const EdgeInsets.all(20.0),
+                    content:
+                        const Text('You have successfully created an account.'),
+                  ));
+        },
         child: const Text(
           'Create',
         ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:paytriot/pages/create_acc_page.dart';
 import 'package:paytriot/pages/read_id_page.dart';
 import 'package:get_storage/get_storage.dart';
-void main() {
 
+void main() {
   runApp(const MyApp());
 }
 
@@ -28,7 +28,6 @@ class MenuPage extends StatefulWidget {
 
   final String title;
 
-
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
@@ -39,35 +38,37 @@ class _MenuPageState extends State<MenuPage> {
   void getAction(String action) async {
     await GetStorage.init();
     box.write('action', action).toString();
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadIdPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ReadIdPage()));
   }
 
   Widget buttToCreateAcc() => TextButton(
-    onPressed: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateAccPage()));
-    },
-    child: const Text(
-      'Create Account',
-    ),
-  );
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CreateAccPage()));
+        },
+        child: const Text(
+          'Create Account',
+        ),
+      );
 
   Widget buttToCashIn() => TextButton(
-    onPressed: (){
-      getAction('CashIn');
-    },
-    child: const Text(
-      'Cash In',
-    ),
-  );
+        onPressed: () {
+          getAction('CashIn');
+        },
+        child: const Text(
+          'Cash In',
+        ),
+      );
 
   Widget buttToPurchase() => TextButton(
-    onPressed: (){
-      getAction('Purchase');
-    },
-    child: const Text(
-      'Purchase',
-    ),
-  );
+        onPressed: () {
+          getAction('Purchase');
+        },
+        child: const Text(
+          'Purchase',
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +77,11 @@ class _MenuPageState extends State<MenuPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: ListView(
-        children:[
-          buttToCreateAcc(),
-          buttToCashIn(),
-          buttToPurchase(),
-        ]
-      ),
+      body: ListView(children: [
+        buttToCreateAcc(),
+        buttToCashIn(),
+        buttToPurchase(),
+      ]),
     );
   }
 }

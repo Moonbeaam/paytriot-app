@@ -65,7 +65,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => MyApp()));
                         },
-                        child: const Text('Return to Home Pageasdfasdf'),
+                        child: const Text('Return to Home Page'),
                       ),
                     ],
                     title: const Text('Successful!'),

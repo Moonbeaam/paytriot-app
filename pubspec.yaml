@@ -42,6 +42,9 @@ dependencies:
   #DateTime
   intl: ^0.17.0
 
+  #NFC
+  nfc_manager: ^3.3.0
+
   #Pass variables
   get_storage: ^2.1.1
 dev_dependencies:

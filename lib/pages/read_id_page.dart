@@ -4,6 +4,7 @@ import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:paytriot/pages/cash_in_page.dart';
 import 'package:paytriot/pages/purchase_page.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class ReadIdPage extends StatefulWidget {
   @override
@@ -17,6 +18,36 @@ class _ReadIdPageState extends State<ReadIdPage> {
   String balText='';
   late StudAcc studentAccount;
   final box = GetStorage();
+  late NfcManager nfcManager;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      displayText = "TAp NFC CARD";
+    });
+
+    NfcManager.instance.startSession(
+        onDiscovered: (NfcTag tag) async {
+          Ndef? ndef = Ndef.from(tag);
+          NdefMessage? ndefMessage = await ndef?.read();
+          if (ndefMessage != null) {
+            List<NdefRecord> records = ndefMessage.records;
+            for (NdefRecord record in records) {
+              // Assuming the record is a text record (with language code)
+              String payloadText = String.fromCharCodes(record.payload);
+              studNum = payloadText.substring(3);
+                setState(() {
+                  displayText = studNum;
+                });
+              break; // Exit the loop after processing the first record
+            }
+            box.write('studNum', studNum).toString();
+            getStudAcc();
+          }
+        }
+    );
+  }
 
   void getStudAcc() async {
     try {

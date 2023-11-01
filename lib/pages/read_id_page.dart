@@ -5,6 +5,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:paytriot/pages/cash_in_page.dart';
 import 'package:paytriot/pages/purchase_page.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import '../NFC/NFC.dart';
+import '../NFC/encrypt.dart';
 
 class ReadIdPage extends StatefulWidget {
   @override
@@ -34,13 +36,22 @@ class _ReadIdPageState extends State<ReadIdPage> {
           if (ndefMessage != null) {
             List<NdefRecord> records = ndefMessage.records;
             for (NdefRecord record in records) {
-              // Assuming the record is a text record (with language code)
-              String payloadText = String.fromCharCodes(record.payload);
-              studNum = payloadText.substring(3);
-                setState(() {
-                  displayText = studNum;
-                });
-              break; // Exit the loop after processing the first record
+              if (record.payload != null) {
+                String encodedData = String.fromCharCodes(record.payload);
+                print('Encoded Data: $encodedData');
+                try {
+                  String decryptedData = decrypt(encodedData);  // Assuming decrypt returns a String
+                  print('Decrypted Data: $decryptedData');
+                  NFCData nfcData = decodeNFCData(decryptedData);
+                  studNum = nfcData.ID;
+                  setState(() {
+                    displayText = studNum;
+                  });
+                  break; // Exit the loop after processing the first record
+                } catch (e) {
+                  print('Error during decryption: $e');
+                }
+              }
             }
             box.write('studNum', studNum).toString();
             getStudAcc();

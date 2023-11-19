@@ -1,10 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:paytriot/pages/create_acc_page.dart';
 import 'package:paytriot/pages/read_id_page.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/view_accs.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: "lib/Algorithms/.env");
   runApp(const MyApp());
 }
 
@@ -97,6 +100,21 @@ class _MenuPageState extends State<MenuPage> {
               Color(0xFF007229),
         ),
       );
+  Widget buttToViewAcc() => OutlinedButton(
+    onPressed: () {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ViewAccPage()));
+    },
+    child: const Text(
+      'View Accounts',
+    ),
+    style: OutlinedButton.styleFrom(
+      backgroundColor:
+      Colors.white,
+      foregroundColor:
+      Color(0xFF007229),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +127,7 @@ class _MenuPageState extends State<MenuPage> {
         buttToCreateAcc(),
         buttToCashIn(),
         buttToPurchase(),
+        buttToViewAcc(),
       ]),
     );
   }

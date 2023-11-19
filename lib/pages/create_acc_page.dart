@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ import 'package:paytriot/model/stud_acc.dart';
 import 'package:paytriot/pages/menu_page.dart';
 import '../NFC/NFC.dart';
 import '../NFC/encrypt.dart';
-
+import '../Algorithms/huffman.dart' as hm;
+import '../Algorithms/AES.dart';
 class CreateAccPage extends StatefulWidget {
   @override
   State<CreateAccPage> createState() => _CreateAccPageState();
@@ -20,18 +22,19 @@ class _CreateAccPageState extends State<CreateAccPage> {
   String lastName = '';
   String firstName = '';
   String middleName = '';
+  hm.Huffman huffman= hm.Huffman();
 
   void writeNFC() async{
-    NFCData nfcData = NFCData(ID: studNum);
+    NFCData nfcData = NFCData(ID: studNum,FirstName: firstName);
     String encodedData = encodeNFCData(nfcData);
-    final encryptedData= encrypt(encodedData);
+    String encryptedData= encryptAES(encodedData);
     NfcManager.instance.startSession(
       onDiscovered: (NfcTag tag) async {
         Ndef? ndef = Ndef.from(tag);
         if (ndef != null && ndef.isWritable) {
           List<NdefRecord> records = [
             NdefRecord.createMime(
-              'application/json',Uint8List.fromList(encryptedData.base64.codeUnits),
+              'application/json',Uint8List.fromList(utf8.encode(encryptedData)),
             ),
           ];
           NdefMessage ndefMessage = NdefMessage(records);
@@ -47,7 +50,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
     final studAcc = StudAcc(
       studNum: studNum,
       lastName: lastName,
-      firstName: firstName,
+      firstName: huffman.encode(firstName),
       middleName: middleName,
       balance: 0,
     );

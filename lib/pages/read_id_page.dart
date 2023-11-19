@@ -7,7 +7,7 @@ import 'package:paytriot/pages/purchase_page.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import '../NFC/NFC.dart';
 import '../NFC/encrypt.dart';
-
+import '../Algorithms/AES.dart';
 class ReadIdPage extends StatefulWidget {
   @override
 
@@ -40,16 +40,17 @@ class _ReadIdPageState extends State<ReadIdPage> {
                 String encodedData = String.fromCharCodes(record.payload);
                 print('Encoded Data: $encodedData');
                 try {
-                  String decryptedData = decrypt(encodedData);  // Assuming decrypt returns a String
+                  String decryptedData = decryptAES(encodedData);  // Assuming decrypt returns a String
                   print('Decrypted Data: $decryptedData');
                   NFCData nfcData = decodeNFCData(decryptedData);
                   studNum = nfcData.ID;
+                  box.write('firstName', nfcData.FirstName).toString();
                   setState(() {
                     displayText = studNum;
                   });
                   break; // Exit the loop after processing the first record
                 } catch (e) {
-                  print('Error during decryption: $e');
+                  print("Error during decryption: $e");
                 }
               }
             }
@@ -71,21 +72,17 @@ class _ReadIdPageState extends State<ReadIdPage> {
             Navigator.push(context, MaterialPageRoute(builder: (context)=>PurchasePage()));
           }
         }
-        else{
-          setState(() {
-            displayText = "asdasd";
-          });
-        }
 
     } catch (e) {
       setState(() {
-        displayText = Exception(e).toString();
+        displayText = e.toString();
       });
     }
   }
   void getStudNum() async {
     await GetStorage.init();
     box.write('studNum', studNum).toString();
+
     getStudAcc();
   }
 

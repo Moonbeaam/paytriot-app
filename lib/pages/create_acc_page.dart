@@ -1,27 +1,60 @@
+
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:paytriot/pages/menu_page.dart';
-
+import '../NFC/NFC.dart';
+import '../NFC/encrypt.dart';
+import '../Algorithms/huffman.dart' as hm;
+import '../Algorithms/AES.dart';
 class CreateAccPage extends StatefulWidget {
   @override
   State<CreateAccPage> createState() => _CreateAccPageState();
 }
+
 
 class _CreateAccPageState extends State<CreateAccPage> {
   String studNum = '';
   String lastName = '';
   String firstName = '';
   String middleName = '';
+  hm.Huffman huffman= hm.Huffman();
+
+  void writeNFC() async{
+    NFCData nfcData = NFCData(ID: studNum,FirstName: firstName);
+    String encodedData = encodeNFCData(nfcData);
+    String encryptedData= encryptAES(encodedData);
+    NfcManager.instance.startSession(
+      onDiscovered: (NfcTag tag) async {
+        Ndef? ndef = Ndef.from(tag);
+        if (ndef != null && ndef.isWritable) {
+          List<NdefRecord> records = [
+            NdefRecord.createMime(
+              'application/json',Uint8List.fromList(utf8.encode(encryptedData)),
+            ),
+          ];
+          NdefMessage ndefMessage = NdefMessage(records);
+
+          await ndef?.write(ndefMessage);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+        }
+      },
+    );
+  }
 
   void addStudAcc() async {
     final studAcc = StudAcc(
       studNum: studNum,
       lastName: lastName,
-      firstName: firstName,
+      firstName: huffman.encode(firstName),
       middleName: middleName,
       balance: 0,
     );
+
     StudAccDB.instance.create(studAcc);
   }
 
@@ -54,29 +87,18 @@ class _CreateAccPageState extends State<CreateAccPage> {
         onChanged: (value) => setState(() => middleName = value),
       );
   Widget button() => TextButton(
-        onPressed: () {
-          addStudAcc();
-          showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => MyApp()));
-                        },
-                        child: const Text('Return to Home Page'),
-                      ),
-                    ],
-                    title: const Text('Successful!'),
-                    contentPadding: const EdgeInsets.all(20.0),
-                    content:
-                        const Text('You have successfully created an account.'),
-                  ));
-        },
         child: const Text(
           'Create',
         ),
+        onPressed: () {
+          addStudAcc();
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Tap Card to Write '),
+              )
+          );
+          writeNFC();
+        },
       );
   @override
   Widget build(BuildContext context) {

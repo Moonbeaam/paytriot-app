@@ -28,7 +28,7 @@ class _CashInPageState extends State<CashInPage> {
             "Balance: ${studentAccount.balance}";
       });
     } catch (e) {
-      displayText = "not found";
+      displayText = e.toString();
     }
   }
 
@@ -75,7 +75,7 @@ class _CashInPageState extends State<CashInPage> {
       ),
       body: ListView(
         children: [
-          Text("$displayText"),
+          Text(displayText),
           buildCashIn(),
           const SizedBox(height: 16, width: 5),
           btnCashIn()

@@ -22,8 +22,7 @@ class StudAccDB {
   }
 
   Future _createDB(Database db, int version) async {
-    final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    final studNumType = ' TEXT NOT NULL';
+    final studNumType = ' TEXT PRIMARY KEY NOT NULL';
     final lastNameType = ' TEXT NOT NULL';
     final firstNameType = ' TEXT NOT NULL';
     final middleNameType = ' TEXT NOT NULL';
@@ -31,7 +30,6 @@ class StudAccDB {
 
     await db.execute('''
     CREATE TABLE $tableStudAcc(
-      ${StudAccFields.id} $idType,
       ${StudAccFields.studNum} $studNumType,
       ${StudAccFields.lastName} $lastNameType,
       ${StudAccFields.firstName} $firstNameType,
@@ -44,8 +42,17 @@ class StudAccDB {
   Future<StudAcc> create(StudAcc studacc) async {
     final db = await instance.database;
 
-    final id = await db.insert(tableStudAcc, studacc.toJson());
-    return studacc.copy(id: id);
+    final studNum = await db.insert(tableStudAcc, studacc.toJson());
+    return studacc.copy(studNum: (studNum as String?));
+  }
+
+  Future<List<StudAcc>> getAllAccounts() async {
+    final db = await instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(tableStudAcc);
+
+    return List.generate(maps.length, (index) {
+      return StudAcc.fromJson(maps[index]);
+    });
   }
 
   Future<StudAcc> readAcc(String studNum) async {

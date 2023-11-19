@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
+import 'package:paytriot/DB/transaction_db.dart';
+import 'package:paytriot/model/transaction.dart' as trans;
 import 'package:get_storage/get_storage.dart';
+import '../Algorithms/huffman.dart' as hm;
 
 class PurchasePage extends StatefulWidget {
   @override
@@ -15,7 +18,8 @@ class _PurchasePageState extends State<PurchasePage> {
   String cashInAmount = '';
   late StudAcc studentAccount;
   final box = GetStorage();
-
+  hm.Huffman huffman= hm.Huffman();
+  
   void readStudAcc() async {
     try {
       final result = await StudAccDB.instance
@@ -23,13 +27,13 @@ class _PurchasePageState extends State<PurchasePage> {
       setState(() {
         studentAccount = result;
         displayText =
-            "Name: ${studentAccount.firstName} ${studentAccount.middleName} "
+            "Name: ${huffman.decode(studentAccount.firstName, box.read('firstName'))} ${studentAccount.middleName} "
             "${studentAccount.lastName}\n"
             "Student Number: ${studentAccount.studNum}\n"
             "Balance: ${studentAccount.balance}";
       });
     } catch (e) {
-      displayText = "not found";
+      displayText = e.toString();
     }
   }
 
@@ -48,6 +52,12 @@ class _PurchasePageState extends State<PurchasePage> {
       });
     }
 
+    final transact = trans.Transaction(
+      amount: int.tryParse(cashInAmount)!,
+      date: "Friday",
+    );
+    TransactionDB.instance.insert(transact);
+
     setState(() {
       displayText =
           "Name: ${studentAccount.firstName} ${studentAccount.middleName} "
@@ -65,10 +75,10 @@ class _PurchasePageState extends State<PurchasePage> {
         onChanged: (value) => setState(() => cashInAmount = value),
       );
 
-  Widget btnCashIn() => TextButton(
+  Widget btnPurchase() => TextButton(
         onPressed: purchase,
         child: const Text(
-          'Cash In',
+          'Purchase',
         ),
       );
 
@@ -86,11 +96,11 @@ class _PurchasePageState extends State<PurchasePage> {
       ),
       body: ListView(
         children: [
-          Text("$displayText"),
+          Text(displayText),
           buildCashIn(),
           const SizedBox(height: 16, width: 5),
-          btnCashIn(),
-          Text("$errorMsg"),
+          btnPurchase(),
+          Text(errorMsg),
         ],
       ),
     );

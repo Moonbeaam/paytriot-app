@@ -4,7 +4,10 @@ import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:paytriot/pages/cash_in_page.dart';
 import 'package:paytriot/pages/purchase_page.dart';
-
+import 'package:nfc_manager/nfc_manager.dart';
+import '../NFC/NFC.dart';
+import '../NFC/encrypt.dart';
+import '../Algorithms/AES.dart';
 class ReadIdPage extends StatefulWidget {
   @override
 
@@ -17,6 +20,46 @@ class _ReadIdPageState extends State<ReadIdPage> {
   String balText='';
   late StudAcc studentAccount;
   final box = GetStorage();
+  late NfcManager nfcManager;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      displayText = "TAp NFC CARD";
+    });
+
+    NfcManager.instance.startSession(
+        onDiscovered: (NfcTag tag) async {
+          Ndef? ndef = Ndef.from(tag);
+          NdefMessage? ndefMessage = await ndef?.read();
+          if (ndefMessage != null) {
+            List<NdefRecord> records = ndefMessage.records;
+            for (NdefRecord record in records) {
+              if (record.payload != null) {
+                String encodedData = String.fromCharCodes(record.payload);
+                print('Encoded Data: $encodedData');
+                try {
+                  String decryptedData = decryptAES(encodedData);  // Assuming decrypt returns a String
+                  print('Decrypted Data: $decryptedData');
+                  NFCData nfcData = decodeNFCData(decryptedData);
+                  studNum = nfcData.ID;
+                  box.write('firstName', nfcData.FirstName).toString();
+                  setState(() {
+                    displayText = studNum;
+                  });
+                  break; // Exit the loop after processing the first record
+                } catch (e) {
+                  print("Error during decryption: $e");
+                }
+              }
+            }
+            box.write('studNum', studNum).toString();
+            getStudAcc();
+          }
+        }
+    );
+  }
 
   void getStudAcc() async {
     try {
@@ -29,21 +72,17 @@ class _ReadIdPageState extends State<ReadIdPage> {
             Navigator.push(context, MaterialPageRoute(builder: (context)=>PurchasePage()));
           }
         }
-        else{
-          setState(() {
-            displayText = "asdasd";
-          });
-        }
 
     } catch (e) {
       setState(() {
-        displayText = Exception(e).toString();
+        displayText = e.toString();
       });
     }
   }
   void getStudNum() async {
     await GetStorage.init();
     box.write('studNum', studNum).toString();
+
     getStudAcc();
   }
 

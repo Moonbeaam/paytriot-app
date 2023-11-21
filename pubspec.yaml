@@ -107,3 +107,20 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  fonts:
+    - family: Nunito Sans
+      fonts:
+        - asset: assets/fonts/Nunito_Sans/NunitoSans_10pt-BoldItalic.ttf
+        - asset: assets/fonts/Nunito_Sans/NunitoSans_10pt-Bold.ttf
+        - asset: assets/fonts/Nunito_Sans/NunitoSans_10pt-ExtraBold.ttf
+        - asset: assets/fonts/Nunito_Sans/NunitoSans_10pt-ExtraBoldItalic.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-BlackItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/Nunito/Nunito-ExtraBoldItalic.ttf
+          weight: 700
+          style: italic
+

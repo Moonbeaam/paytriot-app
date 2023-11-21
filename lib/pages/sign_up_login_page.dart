@@ -12,16 +12,31 @@ class Sign_Up_Login_Page extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 50),
+              const SizedBox(height: 280),
 
               // Welcome to
               Text(
                 "Welcome to",
-                style: TextStyle(),)
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+              ),
 
               // Logo
 
+
               // Paytriot
+              Text(
+                "paytriot",
+                style: TextStyle(
+                  color: Color(0xFF00523E),
+                  fontSize: 36,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w800,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
 
               // Create Account Button
 

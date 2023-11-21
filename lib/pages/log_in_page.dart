@@ -41,8 +41,18 @@ class Login_Page extends StatelessWidget {
               const SizedBox(height: 100),
 
               // Tap NFC Icon
+              Container(
+                width: 80,
+                height: 80,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/nfc_tap.png'),
+                    fit: BoxFit.fitWidth,
+                  )
+                ),
+              ),
 
-              // 
+              // Tap Text
 
               // Enable NFC Scan
               ElevatedButton(

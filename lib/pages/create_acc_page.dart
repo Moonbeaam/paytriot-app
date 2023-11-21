@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:paytriot/pages/menu_page.dart';
+import 'package:paytriot/pages/sign_up_login_page.dart';
 import '../NFC/NFC.dart';
 import '../NFC/encrypt.dart';
 import '../Algorithms/huffman.dart' as hm;
@@ -59,37 +61,86 @@ class _CreateAccPageState extends State<CreateAccPage> {
   }
 
   Widget buildStudNum() => TextFormField(
-        decoration: const InputDecoration(
-          labelText: 'StudentNumber',
-          border: OutlineInputBorder(),
+        decoration: InputDecoration(
+          labelText: 'Student Number',
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey[800]),
+          hintText: "201234567",
+          fillColor: Colors.white70,
+          constraints: BoxConstraints(maxHeight:56,maxWidth: 300),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(
+                width: 20, 
+                style: BorderStyle.none,
+            ),
+          ),
         ),
         onChanged: (value) => setState(() => studNum = value),
       ); 
 
   Widget buildLastName() => TextFormField(
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Last Name',
-          border: OutlineInputBorder(),
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey[800]),
+          hintText: "e.g. Salazar",
+          fillColor: Colors.white70,
+          constraints: BoxConstraints(maxHeight:56,maxWidth: 300),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(
+                width: 20, 
+                style: BorderStyle.none,
+            ),
+          ),
         ),
         onChanged: (value) => setState(() => lastName = value),
       );
   Widget buildFirstName() => TextFormField(
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'First Name',
-          border: OutlineInputBorder(),
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey[800]),
+          hintText: "e.g. Apollo Zeus",
+          fillColor: Colors.white70,
+          constraints: BoxConstraints(maxHeight:56,maxWidth: 300),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(
+                width: 20, 
+                style: BorderStyle.none,
+              ),
+          ),
         ),
         onChanged: (value) => setState(() => firstName = value),
       );
   Widget buildMiddleName() => TextFormField(
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Middle Name',
-          border: OutlineInputBorder(),
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey[800]),
+          hintText: "e.g. Verano",
+          fillColor: Colors.white70,
+          constraints: BoxConstraints(maxHeight:56,maxWidth: 300),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(
+                width: 20, 
+                style: BorderStyle.none,
+              ),
+          ),
         ),
         onChanged: (value) => setState(() => middleName = value),
       );
-  Widget button() => TextButton(
+  Widget button() => ElevatedButton(
         child: const Text(
-          'Create',
+          'Sign Up',
+        ),
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Color(0xFF00523E),
+          fixedSize: const Size(300,40)
         ),
         onPressed: () {
           addStudAcc();
@@ -101,6 +152,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
           writeNFC();
         },
       );
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -121,19 +173,61 @@ class _CreateAccPageState extends State<CreateAccPage> {
           child: Column(
               children:[
                 const SizedBox(height: 40),
+              Text(
+                "Welcome to",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+              ),
+              // Logo
+              // Paytriot
+              Text(
+                "paytriot",
+                style: TextStyle(
+                  color: Color(0xFF00523E),
+                  fontSize: 36,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w800,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+          const SizedBox(height: 32),
+          const SizedBox(height: 16, width: 250),
           buildStudNum(),
-          const SizedBox(height: 16, width: 5),
+          const SizedBox(height: 16, width: 250),
           buildLastName(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 16, width: 250),
           buildFirstName(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 16, width: 250),
           buildMiddleName(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 16, width: 250),
+          const SizedBox(height: 64),
           button(),
+          Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Already have an account?", style: TextStyle(
+              color: Color(0xFF9C9C9C)
+              )
+            ),
+
+            TextButton(
+              onPressed: ()
+                {Navigator.push(context, MaterialPageRoute(builder: (context) => Sign_Up_Login_Page()));
+            },
+            child: const Text(" Login"),
+              style: TextButton.styleFrom(
+              foregroundColor: Color(0xFF9C9C9C)
+                   ),
+                  ),
+                ],
+              ),
         ],
-      ),
-      ),
-      )
-    );
+        
+               ),
+          ),
+        ),
+      );
   }
 }

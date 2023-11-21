@@ -26,7 +26,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
 
   void writeNFC() async{
     NFCData nfcData = NFCData(ID: studNum,FirstName: firstName);
-    String encodedData = encodeNFCData(nfcData);
+    String encodedData = encodeNFCData(nfcData); 
     String encryptedData= encryptAES(encodedData);
     NfcManager.instance.startSession(
       onDiscovered: (NfcTag tag) async {
@@ -64,7 +64,8 @@ class _CreateAccPageState extends State<CreateAccPage> {
           border: OutlineInputBorder(),
         ),
         onChanged: (value) => setState(() => studNum = value),
-      );
+      ); 
+
   Widget buildLastName() => TextFormField(
         decoration: const InputDecoration(
           labelText: 'Last Name',
@@ -109,16 +110,17 @@ class _CreateAccPageState extends State<CreateAccPage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
         // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.white,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-      ),
-      body: ListView(
-        children: [
+      body: SafeArea(
+        child: Center(
+          child: Column(
+              children:[
+                const SizedBox(height: 40),
           buildStudNum(),
           const SizedBox(height: 16, width: 5),
           buildLastName(),
@@ -130,6 +132,8 @@ class _CreateAccPageState extends State<CreateAccPage> {
           button(),
         ],
       ),
+      ),
+      )
     );
   }
 }

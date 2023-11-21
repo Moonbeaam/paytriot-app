@@ -77,6 +77,7 @@ flutter:
 
   assets:
     - lib/Algorithms/.env
+    - assets/images/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -112,6 +113,8 @@ flutter:
     - family: Nunito Sans
       fonts:
         - asset: assets/fonts/Nunito_Sans/NunitoSans_10pt-BoldItalic.ttf
+          weight: 600
+          style: italic
         - asset: assets/fonts/Nunito_Sans/NunitoSans_10pt-Bold.ttf
         - asset: assets/fonts/Nunito_Sans/NunitoSans_10pt-ExtraBold.ttf
         - asset: assets/fonts/Nunito_Sans/NunitoSans_10pt-ExtraBoldItalic.ttf

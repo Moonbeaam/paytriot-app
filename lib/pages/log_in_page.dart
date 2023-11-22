@@ -38,12 +38,12 @@ class Login_Page extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 100),
+              const SizedBox(height: 60),
 
               // Tap NFC Icon
               Container(
-                width: 80,
-                height: 80,
+                width: 250,
+                height: 250,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/nfc_tap.png'),
@@ -52,7 +52,19 @@ class Login_Page extends StatelessWidget {
                 ),
               ),
 
+              const SizedBox(height: 20),
+
               // Tap Text
+              const Text(
+                "Tap your NFC card to continue",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800
+                ),
+              ),
+
+              const SizedBox(height: 60),
 
               // Enable NFC Scan
               ElevatedButton(
@@ -65,7 +77,7 @@ class Login_Page extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 1),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -86,15 +98,19 @@ class Login_Page extends StatelessWidget {
                     onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccPage()));
                     },
-                    child: const Text('Create an Account'),
+                    child: const Text('Create an Account',
+                      style: TextStyle(
+                        fontSize: 12
+                      ),),
                     style: TextButton.styleFrom(
-                      foregroundColor: Color(0xFF00523E)
+                      foregroundColor: Color(0xFF00523E),
+                      padding: EdgeInsets.all(6)
                     ),
                   )
                 ],
               ),
 
-              const SizedBox(height: 100),
+              const SizedBox(height: 40),
 
               // Star Logo
               Container(

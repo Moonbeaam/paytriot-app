@@ -1,13 +1,8 @@
-
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:paytriot/pages/write_scan.dart';
-import 'package:paytriot/pages/home_page.dart';
 import '../NFC/NFC.dart';
 import '../Algorithms/huffman.dart' as hm;
 import '../Algorithms/AES.dart';
@@ -128,7 +123,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
           fixedSize: const Size(300,40)
         ),
         onPressed: () {
-          Navigator.push(
+          Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => WriteScan()));
           addStudAcc();
           writeNFC();

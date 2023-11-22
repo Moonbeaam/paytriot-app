@@ -6,7 +6,6 @@ import 'package:paytriot/pages/cash_in_page.dart';
 import 'package:paytriot/pages/purchase_page.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import '../NFC/NFC.dart';
-import '../NFC/encrypt.dart';
 import '../Algorithms/AES.dart';
 class ReadIdPage extends StatefulWidget {
   @override

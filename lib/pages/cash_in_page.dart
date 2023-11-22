@@ -38,7 +38,10 @@ class _CashInPageState extends State<CashInPage> {
   void cashIn() async {
     int newBalance = studentAccount.balance + (int.tryParse(cashInAmount) ?? 0);
     StudAccDB.instance.updateBalance(newBalance, studentAccount.studNum);
-    studentAccount = studentAccount.copy(balance: newBalance);
+    setState(() {
+      studentAccount = studentAccount.copy(balance: newBalance);
+    });
+    print('CASH: $cashInAmount BAL:${studentAccount.balance}');
   }
 
 
@@ -50,7 +53,6 @@ class _CashInPageState extends State<CashInPage> {
           labelText: 'Cash In Amount',
           border: OutlineInputBorder(),
         ),
-        onChanged: (value) => setState(() => cashInAmount = value),
       );
 
   @override
@@ -87,19 +89,18 @@ class _CashInPageState extends State<CashInPage> {
               const SizedBox(height: 16, width: 5),
 
               NumPad(
-            buttonSize: 65,
-            buttonColor: Colors.white,
-            controller: _myController,
-            delete: () {
-              _myController.text = _myController.text
-                  .substring(0, _myController.text.length - 1);
-            },
-            // do something with the input numbers
-            onSubmit: () {
-              cashIn();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Success_Page()));
-            },
-          ),
+                buttonSize: 65,
+                buttonColor: Colors.white,
+                controller: _myController,
+                delete: () {
+                  _myController.text = _myController.text.substring(0, _myController.text.length - 1);
+                },
+                onSubmit: () {
+                  cashInAmount = _myController.text;
+                  cashIn();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Success_Page()));
+                },
+              ),
             ],
             
           ),

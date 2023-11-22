@@ -179,7 +179,7 @@ class _SuccessPageState extends State<Success_Page> {
               ElevatedButton(
                 child: const Text('Continue'),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => WriteScan()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WriteScan()));
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,

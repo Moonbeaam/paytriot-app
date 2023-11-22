@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Nunito Sans'
       ),
+      routes: {
+
+      },
       home: Sign_Up_Login_Page(),
     );
   }

@@ -8,8 +8,6 @@ import 'package:get_storage/get_storage.dart';
 import '../pages/home_page.dart';
 import '../NFC/NFC.dart';
 import '../Algorithms/AES.dart';
-import 'package:paytriot/DB/stud_acc_db.dart';
-import 'package:paytriot/model/stud_acc.dart';
 
 class WriteScan extends StatefulWidget {
   @override
@@ -49,26 +47,12 @@ class _WriteScanState extends State<WriteScan> {
               }
             }
             box.write('studNum', studNum).toString();
-            getStudAcc();
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Home_Page()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home_Page()));
           }
         }
     );
   }
 
-  void getStudAcc() async {
-    try {
-        final result = await StudAccDB.instance.readAcc(box.read('studNum')); // Use your readAcc function
-        
-            
-          
-        }
-     catch (e) {
-      setState(() {
-        displayText = e.toString();
-      });
-    }
-  }
   void write() async{
     String data= box.read('NFCdata');
     NfcManager.instance.startSession(
@@ -83,16 +67,12 @@ class _WriteScanState extends State<WriteScan> {
           NdefMessage ndefMessage = NdefMessage(records);
 
           await ndef?.write(ndefMessage);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Home_Page()));
+          Navigator.pop(context);
         }
       },
     );
   }
 
-  void getStudNum() async {
-    await GetStorage.init();
-    box.write('studNum', studNum).toString();
-  }
   @override
 
   void initState() {

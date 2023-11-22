@@ -10,10 +10,10 @@ class Home_Page extends StatefulWidget {
 }
 
 class _HomePageState extends State<Home_Page> {
-    late StudAcc studentAccount;
+    late StudAcc studentAccount= const StudAcc(studNum: '', lastName: '', firstName: '', middleName: '', balance: 0);
     final box = GetStorage();
 
-   Future<void> readStudAcc() async {
+   void readStudAcc() async {
     try {
       final result = await StudAccDB.instance.readAcc(box.read('studNum'));
       if (result != null) {
@@ -151,7 +151,7 @@ class _HomePageState extends State<Home_Page> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CashInPage()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CashInPage()));
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Color(0xFF00523E),
@@ -175,7 +175,7 @@ class _HomePageState extends State<Home_Page> {
                     fontWeight:  FontWeight.w900
                   ),),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PurchasePage()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PurchasePage()));
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Color(0xFF00523E),

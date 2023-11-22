@@ -7,7 +7,6 @@ import 'package:flutter/rendering.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:paytriot/pages/write_scan.dart';
-import 'package:paytriot/pages/log_in_page.dart';
 import 'package:paytriot/pages/home_page.dart';
 import '../NFC/NFC.dart';
 import '../Algorithms/huffman.dart' as hm;
@@ -133,7 +132,6 @@ class _CreateAccPageState extends State<CreateAccPage> {
         context, MaterialPageRoute(builder: (context) => WriteScan()));
           addStudAcc();
           writeNFC();
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Home_Page()));
         },
       );
 
@@ -204,9 +202,9 @@ class _CreateAccPageState extends State<CreateAccPage> {
 
                     TextButton(
                       onPressed: ()
-                        {Navigator.push(context, MaterialPageRoute(builder: (context) => Login_Page()));
+                        {Navigator.push(context, MaterialPageRoute(builder: (context) => WriteScan()));
                       },
-                      child: const Text("Login",
+                      child: const Text("Scan NFC Card",
                         style: TextStyle(
                           fontSize: 12
                         ),
@@ -214,7 +212,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
                       style: TextButton.styleFrom(
                         foregroundColor: Color(0xFF00523E),
                         padding: EdgeInsets.zero,
-                        minimumSize: Size(50, 30),
+                        minimumSize: Size(100, 30),
                       ),
                     ),
                   ],

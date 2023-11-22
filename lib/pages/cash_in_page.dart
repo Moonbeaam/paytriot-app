@@ -89,32 +89,7 @@ class _CashInPageState extends State<CashInPage> {
                 ),
               ),
 
-              const SizedBox(height: 60),
-
-              ElevatedButton(
-                child: const Text('Cash In',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight:  FontWeight.w900
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CashInPage()));
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00523E),
-                  fixedSize: const Size(320, 60),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24)
-                  ),
-                  side: const BorderSide(
-                    width: 2,
-                    color: Color(0xFF00523E))
-                ),
-              ),
-
-              const SizedBox(height: 20),
+              const SizedBox(height: 100),
 
               //Text(displayText),
 

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:paytriot/pages/home_page.dart';
 import 'package:paytriot/pages/menu_page.dart';
-=======
->>>>>>> 7f286cec400a6de9f14e3e5e952f7466ed328da7
 import 'package:paytriot/pages/sign_up_login_page.dart';
+import 'package:paytriot/pages/success_page.dart';
 
 
 
@@ -22,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Nunito Sans'
       ),
-      home: Home_Page(),
+      home: Sign_Up_Login_Page(),
     );
   }
 }

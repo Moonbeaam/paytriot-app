@@ -4,16 +4,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:nfc_manager/nfc_manager.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
-import 'package:paytriot/pages/menu_page.dart';
-import 'package:paytriot/pages/sign_up_login_page.dart';
+import 'package:paytriot/pages/write_scan.dart';
 import 'package:paytriot/pages/log_in_page.dart';
 import '../NFC/NFC.dart';
-import '../NFC/encrypt.dart';
 import '../Algorithms/huffman.dart' as hm;
 import '../Algorithms/AES.dart';
+import 'package:get_storage/get_storage.dart';
 class CreateAccPage extends StatefulWidget {
   @override
   State<CreateAccPage> createState() => _CreateAccPageState();
@@ -21,6 +19,7 @@ class CreateAccPage extends StatefulWidget {
 
 
 class _CreateAccPageState extends State<CreateAccPage> {
+  final box = GetStorage();
   String studNum = '';
   String lastName = '';
   String firstName = '';
@@ -31,22 +30,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
     NFCData nfcData = NFCData(ID: studNum,FirstName: firstName);
     String encodedData = encodeNFCData(nfcData); 
     String encryptedData= encryptAES(encodedData);
-    NfcManager.instance.startSession(
-      onDiscovered: (NfcTag tag) async {
-        Ndef? ndef = Ndef.from(tag);
-        if (ndef != null && ndef.isWritable) {
-          List<NdefRecord> records = [
-            NdefRecord.createMime(
-              'application/json',Uint8List.fromList(utf8.encode(encryptedData)),
-            ),
-          ];
-          NdefMessage ndefMessage = NdefMessage(records);
-
-          await ndef?.write(ndefMessage);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
-        }
-      },
-    );
+    box.write('NFCdata', encryptedData);
   }
 
   void addStudAcc() async {
@@ -57,7 +41,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
       middleName: middleName,
       balance: 0,
     );
-
+    print("working");
     StudAccDB.instance.create(studAcc);
   }
 
@@ -144,6 +128,8 @@ class _CreateAccPageState extends State<CreateAccPage> {
           fixedSize: const Size(300,40)
         ),
         onPressed: () {
+          Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WriteScan()));
           addStudAcc();
           writeNFC();
         },

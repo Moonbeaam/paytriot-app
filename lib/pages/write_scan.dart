@@ -1,12 +1,43 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nfc_manager/nfc_manager.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/menu_page.dart';
 import 'package:paytriot/pages/sign_up_login_page.dart';
-import 'package:paytriot/pages/create_acc_page.dart';
 
+class WriteScan extends StatefulWidget {
+  @override
+  State<WriteScan> createState() => _WriteScanState();
+}
 
+class _WriteScanState extends State<WriteScan> {
+  final box = GetStorage();
+  
+  @override
+  
+  void initState() {
+    super.initState();
+    String data= box.read('NFCdata');
+    NfcManager.instance.startSession(
+      onDiscovered: (NfcTag tag) async {
+        Ndef? ndef = Ndef.from(tag);
+        if (ndef != null && ndef.isWritable) {
+          List<NdefRecord> records = [
+            NdefRecord.createMime(
+              'application/json',Uint8List.fromList(utf8.encode(data)),
+            ),
+          ];
+          NdefMessage ndefMessage = NdefMessage(records);
 
-class Login_Page extends StatelessWidget {
-  const Login_Page({super.key});
+          await ndef?.write(ndefMessage);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Sign_Up_Login_Page()));
+        }
+      },
+    );
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +89,7 @@ class Login_Page extends StatelessWidget {
 
               // Tap Text
               const Text(
-                "Tap your NFC card to continue",
+                "Tap your NFC card to write",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -68,49 +99,8 @@ class Login_Page extends StatelessWidget {
 
               const SizedBox(height: 60),
 
-              // Enable NFC Scan
-              ElevatedButton(
-                child: const Text('Enable NFC Scan'),
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00523E),
-                  fixedSize: const Size(300, 40)
-                ),
-              ),
 
               const SizedBox(height: 1),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Don't Have an Account
-                  const Text(
-                    "Don't have an account yet?",
-                    style: TextStyle(
-                      color: Color(0xFF9C9C9C),
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w600
-                    ),
-                  ),
-
-                  // Create Account Button
-                  TextButton(
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccPage()));
-                    },
-                    child: const Text('Create an Account',
-                      style: TextStyle(
-                        fontSize: 12
-                      ),),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Color(0xFF00523E),
-                      padding: EdgeInsets.all(6)
-                    ),
-                  )
-                ],
-              ),
 
               const SizedBox(height: 40),
 

@@ -1,10 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:paytriot/pages/create_acc_page.dart';
-import 'package:paytriot/pages/log_in_page.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/write_scan.dart';
 
-class Sign_Up_Login_Page extends StatelessWidget {
-  const Sign_Up_Login_Page({super.key});
+class Sign_Up_Login_Page extends StatefulWidget {
+  @override
+  State<Sign_Up_Login_Page> createState() => _SignUpLogInState();
+}
+
+class _SignUpLogInState extends State<Sign_Up_Login_Page> {
+  final box= GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +68,7 @@ class Sign_Up_Login_Page extends StatelessWidget {
               ElevatedButton(
                 child: const Text('Create an Account'),
                 onPressed: () {
+                  box.write('page', 'Create');
                   Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccPage()));
                 },
                 style: ElevatedButton.styleFrom(
@@ -75,7 +82,8 @@ class Sign_Up_Login_Page extends StatelessWidget {
               ElevatedButton(
                 child: const Text('Scan NFC Card'),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login_Page()));
+                  box.write('page', 'Scan');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => WriteScan()));
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Color(0xFF1C1C1C),

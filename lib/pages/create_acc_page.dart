@@ -9,6 +9,7 @@ import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:paytriot/pages/menu_page.dart';
 import 'package:paytriot/pages/sign_up_login_page.dart';
+import 'package:paytriot/pages/log_in_page.dart';
 import '../NFC/NFC.dart';
 import '../NFC/encrypt.dart';
 import '../Algorithms/huffman.dart' as hm;
@@ -135,7 +136,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
       );
   Widget button() => ElevatedButton(
         child: const Text(
-          'Sign Up',
+          'Create',
         ),
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
@@ -144,11 +145,6 @@ class _CreateAccPageState extends State<CreateAccPage> {
         ),
         onPressed: () {
           addStudAcc();
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('Tap Card to Write '),
-              )
-          );
           writeNFC();
         },
       );
@@ -202,7 +198,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
           const SizedBox(height: 16, width: 250),
           buildMiddleName(),
           const SizedBox(height: 16, width: 250),
-          const SizedBox(height: 64),
+          const SizedBox(height: 26),
           button(),
           Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -214,17 +210,37 @@ class _CreateAccPageState extends State<CreateAccPage> {
 
             TextButton(
               onPressed: ()
-                {Navigator.push(context, MaterialPageRoute(builder: (context) => Sign_Up_Login_Page()));
+                {Navigator.push(context, MaterialPageRoute(builder: (context) => Login_Page()));
             },
-            child: const Text(" Login"),
+            child: const Text("Login"),
               style: TextButton.styleFrom(
-              foregroundColor: Color(0xFF9C9C9C)
+              foregroundColor: Color(0xFF00523E)
                    ),
                   ),
                 ],
+              ),      
+            // Star Logo
+            Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/star_logo.png'),
+                    fit: BoxFit.fitWidth,
+                  )
+                ),
               ),
+            // Powered by...
+            const Text(
+                "Powered by DLSU-D CSCS Students",
+                style: TextStyle(
+                  color: Color(0xFF00523E),
+                  fontSize: 12,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w600
+                ),
+          )
         ],
-        
                ),
           ),
         ),

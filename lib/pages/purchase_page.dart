@@ -15,7 +15,7 @@ class _PurchasePageState extends State<PurchasePage> {
   String studNum = '';
   String displayText = '';
   String errorMsg = '';
-  String cashInAmount = '';
+  String purchaseAmount = '';
   late StudAcc studentAccount;
   final box = GetStorage();
   hm.Huffman huffman= hm.Huffman();
@@ -38,22 +38,22 @@ class _PurchasePageState extends State<PurchasePage> {
   }
 
   void purchase() async {
-    if (int.tryParse(cashInAmount)! <= studentAccount.balance) {
+    if (int.tryParse(purchaseAmount)! <= studentAccount.balance) {
       setState(() {
         errorMsg = "";
       });
       int newBalance =
-          studentAccount.balance - (int.tryParse(cashInAmount) ?? 0);
+          studentAccount.balance - (int.tryParse(purchaseAmount) ?? 0);
       StudAccDB.instance.updateBalance(newBalance, studentAccount.studNum);
       studentAccount = studentAccount.copy(balance: newBalance);
-    } else if (int.tryParse(cashInAmount)! > studentAccount.balance) {
+    } else if (int.tryParse(purchaseAmount)! > studentAccount.balance) {
       setState(() {
         errorMsg = "Insufficient Balance";
       });
     }
 
     final transact = trans.Transaction(
-      amount: int.tryParse(cashInAmount)!,
+      amount: int.tryParse(purchaseAmount)!,
       date: "Friday",
     );
     TransactionDB.instance.insert(transact);
@@ -72,7 +72,7 @@ class _PurchasePageState extends State<PurchasePage> {
           labelText: 'Cash In Amount',
           border: OutlineInputBorder(),
         ),
-        onChanged: (value) => setState(() => cashInAmount = value),
+        onChanged: (value) => setState(() => purchaseAmount = value),
       );
 
   Widget btnPurchase() => TextButton(

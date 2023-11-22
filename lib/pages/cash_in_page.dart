@@ -70,16 +70,84 @@ class _CashInPageState extends State<CashInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: ListView(
-        children: [
-          Text(displayText),
-          buildCashIn(),
-          const SizedBox(height: 16, width: 5),
-          btnCashIn()
-        ],
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+
+              // Paytriot
+              const Text(
+                "paytriot",
+                style: TextStyle(
+                  color: Color(0xFF00523E),
+                  fontSize: 20,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w900,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+
+              const SizedBox(height: 60),
+
+              ElevatedButton(
+                child: const Text('Cash In',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight:  FontWeight.w900
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CashInPage()));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF00523E),
+                  fixedSize: const Size(320, 60),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24)
+                  ),
+                  side: const BorderSide(
+                    width: 2,
+                    color: Color(0xFF00523E))
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              //Text(displayText),
+
+              // Tap NFC Icon
+              Container(
+                width: 250,
+                height: 250,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/nfc_tap.png'),
+                    fit: BoxFit.fitWidth,
+                  )
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Tap Text
+              const Text(
+                "Tap your NFC card to continue",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800
+                ),
+              ),
+
+              buildCashIn(),
+              const SizedBox(height: 16, width: 5),
+              btnCashIn()
+            ],
+          )
+        )
       ),
     );
   }

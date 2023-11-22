@@ -31,7 +31,7 @@ class Login_Page extends StatelessWidget {
                 "paytriot",
                 style: TextStyle(
                   color: Color(0xFF00523E),
-                  fontSize: 32,
+                  fontSize: 36,
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.w900,
                   fontStyle: FontStyle.italic,

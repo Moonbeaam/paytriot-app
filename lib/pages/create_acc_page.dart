@@ -10,6 +10,7 @@ import 'package:paytriot/model/stud_acc.dart';
 import 'package:paytriot/pages/menu_page.dart';
 import 'package:paytriot/pages/sign_up_login_page.dart';
 import 'package:paytriot/pages/log_in_page.dart';
+import 'package:paytriot/pages/home_page.dart';
 import '../NFC/NFC.dart';
 import '../NFC/encrypt.dart';
 import '../Algorithms/huffman.dart' as hm;
@@ -146,6 +147,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
         onPressed: () {
           addStudAcc();
           writeNFC();
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Home_Page()));
         },
       );
 
@@ -169,79 +171,95 @@ class _CreateAccPageState extends State<CreateAccPage> {
           child: Column(
               children:[
                 const SizedBox(height: 40),
-              Text(
-                "Welcome to",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                ),
-              ),
-              // Logo
-              // Paytriot
-              Text(
-                "paytriot",
-                style: TextStyle(
-                  color: Color(0xFF00523E),
-                  fontSize: 36,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w800,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-          const SizedBox(height: 32),
-          const SizedBox(height: 16, width: 250),
-          buildStudNum(),
-          const SizedBox(height: 16, width: 250),
-          buildLastName(),
-          const SizedBox(height: 16, width: 250),
-          buildFirstName(),
-          const SizedBox(height: 16, width: 250),
-          buildMiddleName(),
-          const SizedBox(height: 16, width: 250),
-          const SizedBox(height: 26),
-          button(),
-          Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Already have an account?", style: TextStyle(
-              color: Color(0xFF9C9C9C)
-              )
-            ),
-
-            TextButton(
-              onPressed: ()
-                {Navigator.push(context, MaterialPageRoute(builder: (context) => Login_Page()));
-            },
-            child: const Text("Login"),
-              style: TextButton.styleFrom(
-              foregroundColor: Color(0xFF00523E)
-                   ),
+                
+                const Text(
+                  "Welcome to",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800
                   ),
-                ],
-              ),      
-            // Star Logo
-            Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/star_logo.png'),
-                    fit: BoxFit.fitWidth,
-                  )
                 ),
-              ),
-            // Powered by...
-            const Text(
-                "Powered by DLSU-D CSCS Students",
-                style: TextStyle(
-                  color: Color(0xFF00523E),
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w600
+                // Logo
+                // Paytriot
+                
+                const Text(
+                  "paytriot",
+                  style: TextStyle(
+                    color: Color(0xFF00523E),
+                    fontSize: 36,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w900,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
-          )
-        ],
-               ),
+                
+                const SizedBox(height: 32),
+                const SizedBox(height: 16, width: 250),
+                buildStudNum(),
+                const SizedBox(height: 16, width: 250),
+                buildLastName(),
+                const SizedBox(height: 16, width: 250),
+                buildFirstName(),
+                const SizedBox(height: 16, width: 250),
+                buildMiddleName(),
+                const SizedBox(height: 16, width: 250),
+                const SizedBox(height: 26),
+                button(),
+                
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Already have an account?", style: TextStyle(
+                      color: Color(0xFF9C9C9C),
+                      fontSize: 12,
+                      )
+                    ),
+
+                    TextButton(
+                      onPressed: ()
+                        {Navigator.push(context, MaterialPageRoute(builder: (context) => Login_Page()));
+                      },
+                      child: const Text("Login",
+                        style: TextStyle(
+                          fontSize: 12
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Color(0xFF00523E),
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size(50, 30),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 60),
+                
+                // Star Logo
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/star_logo.png'),
+                      fit: BoxFit.fitWidth,
+                    )
+                  ),
+                ),
+                
+                // Powered by...
+                const Text(
+                    "Powered by DLSU-D CSCS Students",
+                    style: TextStyle(
+                      color: Color(0xFF00523E),
+                      fontSize: 12,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w600
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       );

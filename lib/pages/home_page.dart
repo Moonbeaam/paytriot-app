@@ -1,16 +1,40 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:paytriot/pages/cash_in_page.dart';
-import 'package:paytriot/pages/create_acc_page.dart';
 import 'package:paytriot/pages/purchase_page.dart';
-import 'package:paytriot/pages/tap_id_page.dart';
-
+import 'package:paytriot/DB/stud_acc_db.dart';
+import 'package:paytriot/model/stud_acc.dart';
+import 'package:get_storage/get_storage.dart';
 class Home_Page extends StatefulWidget {
   @override
   State<Home_Page> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<Home_Page> {
+    late StudAcc studentAccount;
+    final box = GetStorage();
+
+   Future<void> readStudAcc() async {
+    try {
+      final result = await StudAccDB.instance.readAcc(box.read('studNum'));
+      if (result != null) {
+        setState(() {
+          studentAccount = result;
+        });
+      } else {
+        // Handle the case when the result is null
+        // For example, you might want to set a default value or show an error message.
+      }
+    } catch (e) {
+      print(e.toString());
+      // Handle the error, for example, show an error message.
+    }
+  }
+
+  @override
+    void initState() {
+      super.initState();
+      readStudAcc();
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +94,7 @@ class _HomePageState extends State<Home_Page> {
                         ),
                         const SizedBox(width: 180),
                         // Student Number
-                        const Text("202131234",
+                        Text(studentAccount.studNum,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -91,10 +115,10 @@ class _HomePageState extends State<Home_Page> {
 
                     const SizedBox(height: 2), 
                     
-                    const Row(
+                    Row(
                       children: [
                         // Money Balance
-                        Text("\₱1,000.00",
+                        Text("${studentAccount.balance}",
                         style: TextStyle(
                           color: Colors.white,
                               fontSize: 20,

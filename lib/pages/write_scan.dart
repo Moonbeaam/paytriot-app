@@ -20,10 +20,9 @@ class _WriteScanState extends State<WriteScan> {
   String studNum = '';
   String displayText='';
   String balText='';
-  late StudAcc studentAccount;
   final box = GetStorage();
   
-  void scan() async{
+  void scan(){
     NfcManager.instance.startSession(
         onDiscovered: (NfcTag tag) async {
           Ndef? ndef = Ndef.from(tag);
@@ -51,9 +50,24 @@ class _WriteScanState extends State<WriteScan> {
             }
             box.write('studNum', studNum).toString();
             getStudAcc();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Home_Page()));
           }
         }
     );
+  }
+
+  void getStudAcc() async {
+    try {
+        final result = await StudAccDB.instance.readAcc(box.read('studNum')); // Use your readAcc function
+        
+            
+          
+        }
+     catch (e) {
+      setState(() {
+        displayText = e.toString();
+      });
+    }
   }
   void write() async{
     String data= box.read('NFCdata');
@@ -74,23 +88,10 @@ class _WriteScanState extends State<WriteScan> {
       },
     );
   }
-  void getStudAcc() async {
-    try {
-        final result = await StudAccDB.instance.readAcc(box.read('studNum')); // Use your readAcc function
-            if(result!=null){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_Page()));
-            }
-    } catch (e) {
-      setState(() {
-        displayText = e.toString();
-      });
-    }
-  }
+
   void getStudNum() async {
     await GetStorage.init();
     box.write('studNum', studNum).toString();
-
-    getStudAcc();
   }
   @override
 
@@ -101,11 +102,7 @@ class _WriteScanState extends State<WriteScan> {
     }
     else if(box.read('page')=='Scan'){
       scan();
-      getStudNum();
-      getStudAcc();
     }
-    
-    
   }
 
   @override

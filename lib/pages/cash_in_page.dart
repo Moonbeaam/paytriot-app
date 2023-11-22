@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/success_page.dart';
 import './num_pad.dart';
 
 class CashInPage extends StatefulWidget {
@@ -16,24 +17,23 @@ class _CashInPageState extends State<CashInPage> {
   late StudAcc studentAccount;
   final box = GetStorage();
   final TextEditingController _myController = TextEditingController();
-  void readStudAcc() async {
-    try {
+ 
+   void readStudAcc() async {
+       try {
       final result = await StudAccDB.instance
           .readAcc(box.read('studNum')); // Use your readAcc function
       setState(() {
         studentAccount = result;
-        displayText =
-            "Name: ${studentAccount.firstName} ${studentAccount.middleName} "
-            "${studentAccount.lastName}\n"
-            "Student Number: ${studentAccount.studNum}\n"
-            "Balance: ${studentAccount.balance}";
       });
     } catch (e) {
-      displayText = e.toString();
+      e.toString();
     }
+   }
+  @override
+  void initState() {
+    super.initState();
+    readStudAcc();
   }
-
-  
 
   void cashIn() async {
     int newBalance = studentAccount.balance + (int.tryParse(cashInAmount) ?? 0);
@@ -52,12 +52,6 @@ class _CashInPageState extends State<CashInPage> {
         ),
         onChanged: (value) => setState(() => cashInAmount = value),
       );
-
-  @override
-  void initState() {
-    super.initState();
-    readStudAcc();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +97,7 @@ class _CashInPageState extends State<CashInPage> {
             // do something with the input numbers
             onSubmit: () {
               cashIn();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Success_Page()));
             },
           ),
             ],

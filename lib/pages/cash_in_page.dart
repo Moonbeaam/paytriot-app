@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
+import './num_pad.dart';
 
 class CashInPage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _CashInPageState extends State<CashInPage> {
   String cashInAmount = '';
   late StudAcc studentAccount;
   final box = GetStorage();
-
+  final TextEditingController _myController = TextEditingController();
   void readStudAcc() async {
     try {
       final result = await StudAccDB.instance
@@ -32,33 +33,24 @@ class _CashInPageState extends State<CashInPage> {
     }
   }
 
+  
+
   void cashIn() async {
     int newBalance = studentAccount.balance + (int.tryParse(cashInAmount) ?? 0);
     StudAccDB.instance.updateBalance(newBalance, studentAccount.studNum);
     studentAccount = studentAccount.copy(balance: newBalance);
-
-    setState(() {
-      displayText =
-          "Name: ${studentAccount.firstName} ${studentAccount.middleName} "
-          "${studentAccount.lastName}\n"
-          "Student Number: ${studentAccount.studNum}\n"
-          "Balance: ${studentAccount.balance}";
-    });
   }
 
+
   Widget buildCashIn() => TextField(
+        controller: _myController,
+         readOnly: true,
+         keyboardType: TextInputType.none,
         decoration: const InputDecoration(
           labelText: 'Cash In Amount',
           border: OutlineInputBorder(),
         ),
         onChanged: (value) => setState(() => cashInAmount = value),
-      );
-
-  Widget btnCashIn() => TextButton(
-        onPressed: cashIn,
-        child: const Text(
-          'Cash In',
-        ),
       );
 
   @override
@@ -118,35 +110,30 @@ class _CashInPageState extends State<CashInPage> {
 
               //Text(displayText),
 
-              // Tap NFC Icon
-              Container(
-                width: 250,
-                height: 250,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/nfc_tap.png'),
-                    fit: BoxFit.fitWidth,
-                  )
-                ),
-              ),
-
               const SizedBox(height: 20),
 
-              // Tap Text
-              const Text(
-                "Tap your NFC card to continue",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800
-                ),
-              ),
+
 
               buildCashIn(),
               const SizedBox(height: 16, width: 5),
-              btnCashIn()
+
+              NumPad(
+            buttonSize: 65,
+            buttonColor: Colors.white,
+            controller: _myController,
+            delete: () {
+              _myController.text = _myController.text
+                  .substring(0, _myController.text.length - 1);
+            },
+            // do something with the input numbers
+            onSubmit: () {
+              cashIn();
+            },
+          ),
             ],
-          )
+            
+          ),
+
         )
       ),
     );

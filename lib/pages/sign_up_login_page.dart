@@ -9,7 +9,7 @@ class Sign_Up_Login_Page extends StatefulWidget {
 }
 
 class _SignUpLogInState extends State<Sign_Up_Login_Page> {
-  final box= GetStorage();
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +38,14 @@ class _SignUpLogInState extends State<Sign_Up_Login_Page> {
                     width: 50,
                     height: 50,
                     decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/P.png'),
-                        fit: BoxFit.fitWidth,
-                      )
-                    ),
+                        image: DecorationImage(
+                      image: AssetImage('assets/images/P.png'),
+                      fit: BoxFit.fitWidth,
+                    )),
                   ),
 
                   SizedBox(width: 3),
-                  
+
                   // Paytriot
                   const Text(
                     "paytriot",
@@ -68,12 +67,16 @@ class _SignUpLogInState extends State<Sign_Up_Login_Page> {
                 child: const Text('Create an Account'),
                 onPressed: () {
                   box.write('page', 'Create');
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CreateAccPage()));
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Color(0xFF00523E),
-                  fixedSize: const Size(300, 40)
+                  fixedSize: const Size(300, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
                 ),
               ),
 
@@ -82,43 +85,55 @@ class _SignUpLogInState extends State<Sign_Up_Login_Page> {
                 child: const Text('Scan NFC Card'),
                 onPressed: () {
                   box.write('page', 'Scan');
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => WriteScan()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WriteScan()));
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Color(0xFF1C1C1C),
                   backgroundColor: Color(0xFFDEDEDE),
-                  fixedSize: const Size(300, 40)
+                  fixedSize: const Size(300, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
                 ),
               ),
 
               const SizedBox(height: 100),
 
-              // Star Logo
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/star_logo.png'),
-                    fit: BoxFit.fitWidth,
-                  )
-                ),
-              ),
+              Expanded(
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Column(
+                    children: [
+                      //Star Logo
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/star_logo.png'),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
 
-              // Powered by...
-              const Text(
-                "Powered by DLSU-D CSCS Students",
-                style: TextStyle(
-                  color: Color(0xFF00523E),
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w600
+                      // Powered by...
+                      const Text(
+                        "Powered by DLSU-D CSCS Students",
+                        style: TextStyle(
+                            color: Color(0xFF00523E),
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }

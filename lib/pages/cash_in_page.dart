@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/transaction_page.dart';
 import 'package:paytriot/pages/success_page.dart';
 import './num_pad.dart';
 
@@ -74,25 +75,53 @@ class _CashInPageState extends State<CashInPage> {
           child: Center(
         child: Column(
           children: [
-            const SizedBox(height: 40),
-
-            // Paytriot
-            const Text(
-              "paytriot",
-              style: TextStyle(
+            AppBar(
+              title: Text(
+                "paytriot",
+                style: TextStyle(
+                  color: Color(0xFF00523E),
+                  fontSize: 20,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w900,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.white,
+              elevation: 0,
+              leading: IconButton(
+                icon: const BackButtonIcon(),
                 color: Color(0xFF00523E),
-                fontSize: 20,
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w900,
-                fontStyle: FontStyle.italic,
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Home_Page()));
+                },
+              ),
+            ),
+            const SizedBox(height: 30),
+            Container(
+              height: 60,
+              color: Color(0xFF00523E),
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  SizedBox(height: 18),
+                  Text(
+                    'Cash In',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w900),
+                  ),
+                ],
               ),
             ),
 
-            const SizedBox(height: 100),
-
             //Text(displayText),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 70),
 
             buildCashIn(),
             const SizedBox(height: 16, width: 5),

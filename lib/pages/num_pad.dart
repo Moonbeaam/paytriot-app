@@ -7,7 +7,7 @@ class NumPad extends StatelessWidget {
   final TextEditingController controller;
   final Function delete;
   final Function onSubmit;
-  
+
   const NumPad({
     Key? key,
     this.buttonSize = 70.0,
@@ -21,7 +21,7 @@ class NumPad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 30, right: 30),
+      margin: const EdgeInsets.only(left: 5, right: 5),
       child: Column(
         children: [
           const SizedBox(height: 0),

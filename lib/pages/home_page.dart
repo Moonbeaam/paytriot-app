@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paytriot/pages/create_acc_page.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/view_accs_page.dart';
 import 'package:paytriot/pages/write_scan_page.dart';
 
 class Sign_Up_Login_Page extends StatefulWidget {
@@ -90,6 +91,22 @@ class _SignUpLogInState extends State<Sign_Up_Login_Page> {
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Color(0xFF1C1C1C),
+                  backgroundColor: Color(0xFFDEDEDE),
+                  fixedSize: const Size(300, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+              ),
+
+              ElevatedButton(
+                child: const Text('View Accounts'),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ViewAccPage()));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
                   backgroundColor: Color(0xFFDEDEDE),
                   fixedSize: const Size(300, 40),
                   shape: RoundedRectangleBorder(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:paytriot/pages/home_page.dart';
+import 'package:paytriot/pages/transaction_page.dart';
 import 'package:paytriot/pages/success_page.dart';
 import './num_pad.dart';
 
@@ -51,7 +51,7 @@ class _CashInPageState extends State<CashInPage> {
         readOnly: true,
         keyboardType: TextInputType.none,
         decoration: InputDecoration(
-          labelText: '   PHP',
+          labelText: 'PHP',
           filled: true,
           hintStyle: TextStyle(color: Colors.grey[800]),
           hintText: "Input Amount",
@@ -99,9 +99,7 @@ class _CashInPageState extends State<CashInPage> {
                 },
               ),
             ),
-
             const SizedBox(height: 30),
-
             Container(
               height: 60,
               color: Color(0xFF00523E),
@@ -120,6 +118,7 @@ class _CashInPageState extends State<CashInPage> {
                 ],
               ),
             ),
+
             //Text(displayText),
 
             const SizedBox(height: 70),

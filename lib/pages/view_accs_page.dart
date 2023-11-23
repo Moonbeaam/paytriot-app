@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
+import 'package:paytriot/pages/home_page.dart';
+
+import 'transaction_page.dart';
+
+final ScrollController _horizontal = ScrollController(),
+    _vertical = ScrollController();
 
 class ViewAccPage extends StatefulWidget {
   @override
@@ -63,31 +69,90 @@ class _ViewAccPageState extends State<ViewAccPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Student Account Table'),
-      ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: DataTable(
-          columns: const <DataColumn>[
-            DataColumn(
-              label: Text('Student Number'),
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          AppBar(
+            title: Text(
+              "paytriot",
+              style: TextStyle(
+                color: Color(0xFF00523E),
+                fontSize: 20,
+                fontFamily: 'Nunito',
+                fontWeight: FontWeight.w900,
+                fontStyle: FontStyle.italic,
+              ),
             ),
-            DataColumn(
-              label: Text('Balance'),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.white,
+            elevation: 0,
+            leading: IconButton(
+              icon: const BackButtonIcon(),
+              color: Color(0xFF00523E),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Sign_Up_Login_Page()));
+              },
             ),
-          ],
-          rows: studentAccounts
-              .map(
-                (account) => DataRow(
-              cells: <DataCell>[
-                DataCell(Text(account.studNum)),
-                DataCell(Text(account.balance.toString())),
+          ),
+          const SizedBox(height: 30),
+          Container(
+            height: 60,
+            color: Color(0xFF00523E),
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                SizedBox(height: 18),
+                Text(
+                  'Accounts',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
               ],
             ),
-          )
-              .toList(),
-        ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              controller: _vertical, // Use the vertical controller here
+              scrollDirection: Axis.vertical,
+              child: Scrollbar(
+                controller: _horizontal, // Use the horizontal controller here
+                trackVisibility: true,
+                child: SingleChildScrollView(
+                  controller: _horizontal, // Use the horizontal controller here
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    columns: const <DataColumn>[
+                      DataColumn(
+                        label: Text('Student Number'),
+                      ),
+                      DataColumn(
+                        label: Text('Balance'),
+                      ),
+                    ],
+                    rows: studentAccounts
+                        .map(
+                          (account) => DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text(account.studNum)),
+                              DataCell(Text(account.balance.toString())),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

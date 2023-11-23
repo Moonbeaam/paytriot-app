@@ -108,7 +108,7 @@ class _SuccessPageState extends State<Success_Page> {
                           height: 30,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/P.png'),
+                              image: AssetImage('assets/images/P_white.png'),
                               fit: BoxFit.fitWidth,
                             )
                           ),

@@ -49,7 +49,7 @@ class _WriteScanState extends State<WriteScan> {
         }
         box.write('studNum', studNum).toString();
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Home_Page()));
+            context, MaterialPageRoute(builder: (context) => Transaction_Page()));
       }
     });
   }
@@ -114,7 +114,7 @@ class _WriteScanState extends State<WriteScan> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Sign_Up_Login_Page()));
+                        builder: (context) => Home_Page()));
               },
             ),
           ),

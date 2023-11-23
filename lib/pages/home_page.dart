@@ -4,12 +4,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:paytriot/pages/view_accs_page.dart';
 import 'package:paytriot/pages/write_scan_page.dart';
 
-class Sign_Up_Login_Page extends StatefulWidget {
+class Home_Page extends StatefulWidget {
   @override
-  State<Sign_Up_Login_Page> createState() => _SignUpLogInState();
+  State<Home_Page> createState() => _HomePage();
 }
 
-class _SignUpLogInState extends State<Sign_Up_Login_Page> {
+class _HomePage extends State<Home_Page> {
   final box = GetStorage();
 
   @override

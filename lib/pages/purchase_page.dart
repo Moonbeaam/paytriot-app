@@ -111,7 +111,7 @@ class _PurchasePageState extends State<PurchasePage> {
                 color: Color(0xFF00523E),
                 onPressed: () {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Home_Page()));
+                      MaterialPageRoute(builder: (context) => Transaction_Page()));
                 },
               ),
             ),

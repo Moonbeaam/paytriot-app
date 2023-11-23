@@ -9,8 +9,6 @@ import '../Algorithms/huffman.dart' as hm;
 import '../Algorithms/AES.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'transaction_page.dart';
-
 class CreateAccPage extends StatefulWidget {
   @override
   State<CreateAccPage> createState() => _CreateAccPageState();
@@ -173,7 +171,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Sign_Up_Login_Page()));
+                            builder: (context) => Home_Page()));
                   },
                 ),
               ),

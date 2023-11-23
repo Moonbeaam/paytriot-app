@@ -4,12 +4,12 @@ import 'package:paytriot/pages/purchase_page.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
-class Home_Page extends StatefulWidget {
+class Transaction_Page extends StatefulWidget {
   @override
-  State<Home_Page> createState() => _HomePageState();
+  State<Transaction_Page> createState() => _TransactionPageState();
 }
 
-class _HomePageState extends State<Home_Page> {
+class _TransactionPageState extends State<Transaction_Page> {
     late StudAcc studentAccount= const StudAcc(studNum: '', lastName: '', firstName: '', middleName: '', balance: 0);
     final box = GetStorage();
 

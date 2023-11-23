@@ -3,8 +3,6 @@ import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:paytriot/pages/home_page.dart';
 
-import 'transaction_page.dart';
-
 final ScrollController _horizontal = ScrollController(),
     _vertical = ScrollController();
 
@@ -94,7 +92,7 @@ class _ViewAccPageState extends State<ViewAccPage> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Sign_Up_Login_Page()));
+                        builder: (context) => Home_Page()));
               },
             ),
           ),

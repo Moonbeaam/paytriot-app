@@ -1,12 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:paytriot/pages/write_scan_page.dart';
-
-class Success_Page extends StatefulWidget {
+import 'package:paytriot/pages/cash_in_page.dart';
+import 'package:paytriot/pages/purchase_page.dart';
+import 'package:paytriot/DB/stud_acc_db.dart';
+import 'package:paytriot/model/stud_acc.dart';
+import 'package:get_storage/get_storage.dart';
+class Home_Page extends StatefulWidget {
   @override
-  State<Success_Page> createState() => _SuccessPageState();
+  State<Home_Page> createState() => _HomePageState();
 }
 
-class _SuccessPageState extends State<Success_Page> {
+class _HomePageState extends State<Home_Page> {
+    late StudAcc studentAccount= const StudAcc(studNum: '', lastName: '', firstName: '', middleName: '', balance: 0);
+    final box = GetStorage();
+
+   void readStudAcc() async {
+    try {
+      final result = await StudAccDB.instance.readAcc(box.read('studNum'));
+      if (result != null) {
+        setState(() {
+          studentAccount = result;
+        });
+      } else {
+        // Handle the case when the result is null
+        // For example, you might want to set a default value or show an error message.
+      }
+    } catch (e) {
+      print(e.toString());
+      // Handle the error, for example, show an error message.
+    }
+  }
+
+  @override
+    void initState() {
+      super.initState();
+      readStudAcc();
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -30,56 +58,7 @@ class _SuccessPageState extends State<Success_Page> {
                 ),
               ),
 
-              const SizedBox(height: 30),
-
-              // Transaction Successful!
-              const Text(
-                "Transaction Successful!",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w900
-                ),
-              ),
-
-              const SizedBox(height: 30),
-
-              // Success Icon
-              Container(
-                width: 90,
-                height: 90,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/success.png'),
-                    fit: BoxFit.fitWidth,
-                  )
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              // Cash In Process
-              const Text(
-                "Cash-in Processed",
-                style: TextStyle(
-                  color: Color(0xFF848484),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              const Text(
-                "+₱500",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 36,
-                  fontWeight: FontWeight.w900
-                ),
-              ),
-
-              const SizedBox(height: 20),
+              const SizedBox(height: 60),
 
               // Card Balance
               Container(
@@ -115,7 +94,7 @@ class _SuccessPageState extends State<Success_Page> {
                         ),
                         const SizedBox(width: 180),
                         // Student Number
-                        const Text("202131234",
+                        Text(studentAccount.studNum,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -136,10 +115,10 @@ class _SuccessPageState extends State<Success_Page> {
 
                     const SizedBox(height: 2), 
                     
-                    const Row(
+                    Row(
                       children: [
                         // Money Balance
-                        Text("\₱1,500.00",
+                        Text("${studentAccount.balance}",
                         style: TextStyle(
                           color: Colors.white,
                               fontSize: 20,
@@ -148,7 +127,7 @@ class _SuccessPageState extends State<Success_Page> {
                         SizedBox(width: 90), 
 
                         // Student Number
-                        Text("Last updated 22 Nov. 2023",
+                        Text("Last updated 20 Nov. 2023",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 6,
@@ -161,34 +140,56 @@ class _SuccessPageState extends State<Success_Page> {
                 )
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 40),
 
-              // Cash In Process
-              const Text(
-                "Thank you for using Paytriot!",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w900
+              // Cash In
+              OutlinedButton(
+                child: const Text('Cash In',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight:  FontWeight.w900
+                  ),
                 ),
-              ),
-
-              const SizedBox(height: 30),
-
-              // Continue Button
-              ElevatedButton(
-                child: const Text('Continue'),
                 onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WriteScan()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CashInPage()));
                 },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00523E),
-                  fixedSize: const Size(140, 40)
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Color(0xFF00523E),
+                  fixedSize: const Size(320, 60),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24)
+                  ),
+                  side: const BorderSide(
+                    width: 2,
+                    color: Color(0xFF00523E))
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
+
+              // Purchase
+              OutlinedButton(
+                child: const Text('Purchase',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight:  FontWeight.w900
+                  ),),
+                onPressed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PurchasePage()));
+                },
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Color(0xFF00523E),
+                  fixedSize: const Size(320, 60),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24)
+                  ),
+                  side: const BorderSide(
+                    width: 2,
+                    color: Color(0xFF00523E))
+                ),
+              ),
+
+              const SizedBox(height: 180),
 
               // Star Logo
               Container(

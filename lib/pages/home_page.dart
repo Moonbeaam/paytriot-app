@@ -1,40 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:paytriot/pages/cash_in_page.dart';
-import 'package:paytriot/pages/purchase_page.dart';
-import 'package:paytriot/DB/stud_acc_db.dart';
-import 'package:paytriot/model/stud_acc.dart';
+import 'package:paytriot/pages/create_acc_page.dart';
 import 'package:get_storage/get_storage.dart';
-class Home_Page extends StatefulWidget {
+import 'package:paytriot/pages/write_scan_page.dart';
+
+class Sign_Up_Login_Page extends StatefulWidget {
   @override
-  State<Home_Page> createState() => _HomePageState();
+  State<Sign_Up_Login_Page> createState() => _SignUpLogInState();
 }
 
-class _HomePageState extends State<Home_Page> {
-    late StudAcc studentAccount= const StudAcc(studNum: '', lastName: '', firstName: '', middleName: '', balance: 0);
-    final box = GetStorage();
-
-   void readStudAcc() async {
-    try {
-      final result = await StudAccDB.instance.readAcc(box.read('studNum'));
-      if (result != null) {
-        setState(() {
-          studentAccount = result;
-        });
-      } else {
-        // Handle the case when the result is null
-        // For example, you might want to set a default value or show an error message.
-      }
-    } catch (e) {
-      print(e.toString());
-      // Handle the error, for example, show an error message.
-    }
-  }
-
-  @override
-    void initState() {
-      super.initState();
-      readStudAcc();
-    }
+class _SignUpLogInState extends State<Sign_Up_Login_Page> {
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -44,179 +19,121 @@ class _HomePageState extends State<Home_Page> {
         child: Center(
           child: Column(
             children: [
-              SizedBox(height: 40),
+              SizedBox(height: 240),
 
-              // Paytriot
+              // Welcome to
               const Text(
-                "paytriot",
+                "Welcome to",
                 style: TextStyle(
-                  color: Color(0xFF00523E),
-                  fontSize: 20,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w900,
-                  fontStyle: FontStyle.italic,
+                  color: Colors.black,
+                  fontSize: 24,
                 ),
               ),
 
-              const SizedBox(height: 60),
-
-              // Card Balance
-              Container(
-                width: 320,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Color(0xFF298871),
-                      Color(0xFF00523E)
-                    ]
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Logo
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage('assets/images/P.png'),
+                      fit: BoxFit.fitWidth,
+                    )),
                   ),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        // Logo
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/P only.png'),
-                              fit: BoxFit.fitWidth,
-                            )
-                          ),
-                        ),
-                        const SizedBox(width: 180),
-                        // Student Number
-                        Text(studentAccount.studNum,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontStyle: FontStyle.italic
-                          ),
-                        ),
-                      ],
+
+                  SizedBox(width: 3),
+
+                  // Paytriot
+                  const Text(
+                    "paytriot",
+                    style: TextStyle(
+                      color: Color(0xFF00523E),
+                      fontSize: 40,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w900,
+                      fontStyle: FontStyle.italic,
                     ),
+                  ),
+                ],
+              ),
 
-                    const SizedBox(height: 30),
+              const SizedBox(height: 100),
 
-                    const Text("Total Balance",
-                      style: TextStyle(
-                        color: Colors.white,
-                            fontSize: 10,
+              // Create Account Button
+              ElevatedButton(
+                child: const Text('Create an Account'),
+                onPressed: () {
+                  box.write('page', 'Create');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CreateAccPage()));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF00523E),
+                  fixedSize: const Size(300, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+              ),
+
+              // Scan NFC Card Button
+              ElevatedButton(
+                child: const Text('Scan NFC Card'),
+                onPressed: () {
+                  box.write('page', 'Scan');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WriteScan()));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Color(0xFF1C1C1C),
+                  backgroundColor: Color(0xFFDEDEDE),
+                  fixedSize: const Size(300, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 100),
+
+              Expanded(
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Column(
+                    children: [
+                      //Star Logo
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/star_logo.png'),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
                       ),
-                    ),
 
-                    const SizedBox(height: 2), 
-                    
-                    Row(
-                      children: [
-                        // Money Balance
-                        Text("${studentAccount.balance}",
+                      // Powered by...
+                      const Text(
+                        "Powered by DLSU-D CSCS Students",
                         style: TextStyle(
-                          color: Colors.white,
-                              fontSize: 20,
-                        ),),
-                        
-                        SizedBox(width: 90), 
-
-                        // Student Number
-                        Text("Last updated 20 Nov. 2023",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 6,
-                            fontStyle: FontStyle.italic
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ),
-
-              const SizedBox(height: 40),
-
-              // Cash In
-              OutlinedButton(
-                child: const Text('Cash In',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight:  FontWeight.w900
+                            color: Color(0xFF00523E),
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CashInPage()));
-                },
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Color(0xFF00523E),
-                  fixedSize: const Size(320, 60),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24)
-                  ),
-                  side: const BorderSide(
-                    width: 2,
-                    color: Color(0xFF00523E))
-                ),
               ),
-
-              const SizedBox(height: 20),
-
-              // Purchase
-              OutlinedButton(
-                child: const Text('Purchase',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight:  FontWeight.w900
-                  ),),
-                onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PurchasePage()));
-                },
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Color(0xFF00523E),
-                  fixedSize: const Size(320, 60),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24)
-                  ),
-                  side: const BorderSide(
-                    width: 2,
-                    color: Color(0xFF00523E))
-                ),
-              ),
-
-              const SizedBox(height: 180),
-
-              // Star Logo
-              Container(
-                width: 50,
-                height: 50,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/star_logo.png'),
-                    fit: BoxFit.fitWidth,
-                  )
-                ),
-              ),
-
-              // Powered by...
-              const Text(
-                "Powered by DLSU-D CSCS Students",
-                style: TextStyle(
-                  color: Color(0xFF00523E),
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w600
-                )
-              )
-            ]
-          )
-        )
-      )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

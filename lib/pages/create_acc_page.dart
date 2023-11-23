@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
-import 'package:paytriot/pages/write_scan.dart';
+import 'package:paytriot/pages/write_scan_page.dart';
 import '../NFC/NFC.dart';
 import '../Algorithms/huffman.dart' as hm;
 import '../Algorithms/AES.dart';

@@ -43,7 +43,7 @@ class StudAccDB {
     final db = await instance.database;
 
     final studNum = await db.insert(tableStudAcc, studacc.toJson());
-    return studacc.copy(studNum: (studNum as String?));
+    return studacc.copy(studNum: (studNum.toString()));
   }
 
   Future<List<StudAcc>> getAllAccounts() async {

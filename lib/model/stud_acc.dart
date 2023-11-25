@@ -16,14 +16,14 @@ class StudAcc{
   final String studNum;
   final String lastName;
   final String firstName;
-  final String middleName;
+  final String? middleName;
   final int balance;
 
   const StudAcc({
     required this.studNum,
     required this.lastName,
     required this.firstName,
-    required this.middleName,
+    this.middleName,
     required this.balance,
   });
 

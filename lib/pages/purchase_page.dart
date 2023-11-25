@@ -49,6 +49,8 @@ class _PurchasePageState extends State<PurchasePage> {
           studentAccount.balance - (int.tryParse(purchaseAmount) ?? 0);
       StudAccDB.instance.updateBalance(newBalance, studentAccount.studNum);
       studentAccount = studentAccount.copy(balance: newBalance);
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => Success_Page()));
     } else if (int.tryParse(purchaseAmount)! > studentAccount.balance) {
       setState(() {
         errorMsg = "Insufficient Balance";
@@ -92,17 +94,6 @@ class _PurchasePageState extends State<PurchasePage> {
         child: Column(
           children: [
             AppBar(
-              title: Text(
-                "paytriot",
-                style: TextStyle(
-                  color: Color(0xFF00523E),
-                  fontSize: 20,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w900,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-              centerTitle: true,
               backgroundColor: Colors.white,
               foregroundColor: Colors.white,
               elevation: 0,
@@ -138,7 +129,15 @@ class _PurchasePageState extends State<PurchasePage> {
             //Text(displayText),
 
             const SizedBox(height: 70),
-
+            Text(
+              '$errorMsg',
+              style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(height: 20),
             buildCashIn(),
             const SizedBox(height: 16, width: 5),
 
@@ -153,8 +152,7 @@ class _PurchasePageState extends State<PurchasePage> {
               onSubmit: () {
                 purchaseAmount = _myController.text;
                 purchase();
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Success_Page()));
+                box.write('amount', purchaseAmount);
               },
             ),
 

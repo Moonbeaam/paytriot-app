@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
-import 'package:paytriot/pages/home_page.dart';
 
 final ScrollController _horizontal = ScrollController(),
     _vertical = ScrollController();
@@ -27,7 +26,15 @@ class _ViewAccPageState extends State<ViewAccPage> {
     List<StudAcc> sortedAccounts = mergeSort(accounts);
 
     setState(() {
-      studentAccounts = sortedAccounts; // Corrected assignment here
+      studentAccounts = sortedAccounts;
+      print("Unsorted");
+      for (StudAcc account in accounts) {
+        print("${account.studNum}, ${account.balance}");
+      }
+      print("Merge Sorted");
+      for (StudAcc account in studentAccounts) {
+        print("${account.studNum}, ${account.balance}");
+      }
     });
   }
 
@@ -71,17 +78,6 @@ class _ViewAccPageState extends State<ViewAccPage> {
       body: Column(
         children: [
           AppBar(
-            title: Text(
-              "paytriot",
-              style: TextStyle(
-                color: Color(0xFF00523E),
-                fontSize: 20,
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w900,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            centerTitle: true,
             backgroundColor: Colors.white,
             foregroundColor: Colors.white,
             elevation: 0,
@@ -89,10 +85,7 @@ class _ViewAccPageState extends State<ViewAccPage> {
               icon: const BackButtonIcon(),
               color: Color(0xFF00523E),
               onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Home_Page()));
+                Navigator.pop(context);
               },
             ),
           ),

@@ -4,6 +4,7 @@ import 'package:paytriot/pages/purchase_page.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/write_scan_page.dart';
 class Transaction_Page extends StatefulWidget {
   @override
   State<Transaction_Page> createState() => _TransactionPageState();
@@ -21,12 +22,9 @@ class _TransactionPageState extends State<Transaction_Page> {
           studentAccount = result;
         });
       } else {
-        // Handle the case when the result is null
-        // For example, you might want to set a default value or show an error message.
       }
     } catch (e) {
       print(e.toString());
-      // Handle the error, for example, show an error message.
     }
   }
 
@@ -44,11 +42,23 @@ class _TransactionPageState extends State<Transaction_Page> {
         child: Center(
           child: Column(
             children: [
+              AppBar(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                leading: IconButton(
+                  icon: const BackButtonIcon(),
+                  color: Color(0xFF00523E),
+                  onPressed: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WriteScan()));
+                  },
+                ),
+              ),
               SizedBox(height: 40),
 
               // Paytriot
               const Text(
-                "paytriot",
+                "Welcome!",
                 style: TextStyle(
                   color: Color(0xFF00523E),
                   fontSize: 20,
@@ -124,16 +134,7 @@ class _TransactionPageState extends State<Transaction_Page> {
                               fontSize: 20,
                         ),),
                         
-                        SizedBox(width: 90), 
-
-                        // Student Number
-                        Text("Last updated 20 Nov. 2023",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 6,
-                            fontStyle: FontStyle.italic
-                          ),
-                        ),
+                        SizedBox(width: 90),
                       ],
                     ),
                   ],
@@ -151,6 +152,7 @@ class _TransactionPageState extends State<Transaction_Page> {
                   ),
                 ),
                 onPressed: () {
+                  box.write('transact', 'CashIn');
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CashInPage()));
                 },
                 style: OutlinedButton.styleFrom(
@@ -175,6 +177,7 @@ class _TransactionPageState extends State<Transaction_Page> {
                     fontWeight:  FontWeight.w900
                   ),),
                 onPressed: () {
+                  box.write('transact', 'Purchase');
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PurchasePage()));
                 },
                 style: OutlinedButton.styleFrom(

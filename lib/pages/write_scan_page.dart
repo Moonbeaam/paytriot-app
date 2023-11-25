@@ -5,7 +5,6 @@ import 'package:nfc_manager/nfc_manager.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:get_storage/get_storage.dart';
-import 'package:paytriot/pages/home_page.dart';
 import '../pages/transaction_page.dart';
 import '../NFC/NFC.dart';
 import '../Algorithms/AES.dart';
@@ -30,7 +29,7 @@ class _WriteScanState extends State<WriteScan> {
         for (NdefRecord record in records) {
           if (record.payload != null) {
             String encodedData = String.fromCharCodes(record.payload);
-            print('Encoded Data: $encodedData');
+            print('AES\nEncoded Data: $encodedData');
             try {
               String decryptedData =
                   decryptAES(encodedData); // Assuming decrypt returns a String
@@ -92,101 +91,86 @@ class _WriteScanState extends State<WriteScan> {
         body: SafeArea(
             child: Center(
                 child: Column(children: [
-          AppBar(
-            title: Text(
-              "paytriot",
-              style: TextStyle(
-                color: Color(0xFF00523E),
-                fontSize: 20,
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w900,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.white,
-            elevation: 0,
-            leading: IconButton(
-              icon: const BackButtonIcon(),
-              color: Color(0xFF00523E),
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Home_Page()));
-              },
-            ),
-          ),
+                  AppBar(
+                    title: const Text(
+                      "paytriot",
+                      style: TextStyle(
+                        color: Color(0xFF00523E),
+                        fontSize: 20,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w900,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    centerTitle: true,
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    leading: IconButton(
+                      icon: const BackButtonIcon(),
+                      color: Color(0xFF00523E),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 80),
 
-          SizedBox(height: 40),
+                  // Paytriot
+                  const Text(
+                    "Tap your NFC card",
+                    style: TextStyle(
+                      color: Color(0xFF00523E),
+                      fontSize: 32,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w900,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
 
-          // Welcome back to
-          const Text(
-            "Welcome to",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w800),
-          ),
+                  const SizedBox(height: 50),
 
-          // Paytriot
-          const Text(
-            "paytriot",
-            style: TextStyle(
-              color: Color(0xFF00523E),
-              fontSize: 32,
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w900,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
+                  // Tap NFC Icon
+                  Container(
+                    width: 250,
+                    height: 250,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage('assets/images/nfc_tap.png'),
+                      fit: BoxFit.fitWidth,
+                    )),
+                  ),
 
-          const SizedBox(height: 80),
+                  const SizedBox(height: 70),
 
-          // Tap NFC Icon
-          Container(
-            width: 250,
-            height: 250,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('assets/images/nfc_tap.png'),
-              fit: BoxFit.fitWidth,
-            )),
-          ),
+                  LoadingAnimationWidget.twoRotatingArc(
+                      color: const Color(0xFF00523E), size: 40),
 
-          const SizedBox(height: 20),
+                  const SizedBox(height: 60),
 
-          // Tap Text
-          const Text(
-            "Tap your NFC card to write",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w800),
-          ),
+                  // Star Logo
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage('assets/images/star_logo.png'),
+                      fit: BoxFit.fitWidth,
+                    )),
+                  ),
 
-          const SizedBox(height: 30),
+                  // Powered by...
+                  const Text("Powered by DLSU-D CSCS Students",
+                      style: TextStyle(
+                          color: Color(0xFF00523E),
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w600))
 
-          LoadingAnimationWidget.twoRotatingArc(
-              color: Color(0xFF00523E), size: 40),
-
-          const SizedBox(height: 60),
-
-          // Star Logo
-          Container(
-            width: 50,
-            height: 50,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('assets/images/star_logo.png'),
-              fit: BoxFit.fitWidth,
-            )),
-          ),
-
-          // Powered by...
-          const Text("Powered by DLSU-D CSCS Students",
-              style: TextStyle(
-                  color: Color(0xFF00523E),
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w600))
-        ]))));
+                ]
+            )
+        )
+      )
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:paytriot/pages/purchase_page.dart';
 import 'package:paytriot/DB/stud_acc_db.dart';
 import 'package:paytriot/model/stud_acc.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:paytriot/pages/write_scan_page.dart';
 class Transaction_Page extends StatefulWidget {
   @override
   State<Transaction_Page> createState() => _TransactionPageState();
@@ -41,11 +42,23 @@ class _TransactionPageState extends State<Transaction_Page> {
         child: Center(
           child: Column(
             children: [
+              AppBar(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                leading: IconButton(
+                  icon: const BackButtonIcon(),
+                  color: Color(0xFF00523E),
+                  onPressed: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WriteScan()));
+                  },
+                ),
+              ),
               SizedBox(height: 40),
 
               // Paytriot
               const Text(
-                "paytriot",
+                "Welcome!",
                 style: TextStyle(
                   color: Color(0xFF00523E),
                   fontSize: 20,

@@ -78,17 +78,6 @@ class _ViewAccPageState extends State<ViewAccPage> {
       body: Column(
         children: [
           AppBar(
-            title: Text(
-              "paytriot",
-              style: TextStyle(
-                color: Color(0xFF00523E),
-                fontSize: 20,
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w900,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            centerTitle: true,
             backgroundColor: Colors.white,
             foregroundColor: Colors.white,
             elevation: 0,

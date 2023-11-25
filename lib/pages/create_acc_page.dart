@@ -167,17 +167,6 @@ class _CreateAccPageState extends State<CreateAccPage> {
           child: Column(
             children: [
               AppBar(
-                title: Text(
-                  "paytriot",
-                  style: TextStyle(
-                    color: Color(0xFF00523E),
-                    fontSize: 20,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w900,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                centerTitle: true,
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.white,
                 elevation: 0,
@@ -195,7 +184,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
                 children: [
                   const SizedBox(height: 40),
                   const Text(
-                    "Welcome to",
+                    "Your tap-to-pay convenience",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -205,7 +194,7 @@ class _CreateAccPageState extends State<CreateAccPage> {
                   // Logo
                   // Paytriot
                   const Text(
-                    "paytriot",
+                    "Starts Here",
                     style: TextStyle(
                       color: Color(0xFF00523E),
                       fontSize: 36,

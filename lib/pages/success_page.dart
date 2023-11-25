@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:paytriot/pages/write_scan_page.dart';
 import 'package:get_storage/get_storage.dart';
 import '../DB/stud_acc_db.dart';
@@ -31,6 +34,9 @@ class _SuccessPageState extends State<Success_Page> {
   @override
   void initState() {
     super.initState();
+    Timer(const Duration(seconds: 4), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WriteScan()));
+    });
     readStudAcc();
     if (box.read('transact')=='CashIn'){
       amountTransact="+ \₱${box.read('amount')}";
@@ -48,25 +54,26 @@ class _SuccessPageState extends State<Success_Page> {
         child: Center(
           child: Column(
             children: [
-              SizedBox(height: 40),
-
-              // Paytriot
-              const Text(
-                "paytriot",
-                style: TextStyle(
-                  color: Color(0xFF00523E),
-                  fontSize: 20,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w900,
-                  fontStyle: FontStyle.italic,
+              AppBar(
+                title: const Text(
+                  "paytriot",
+                  style: TextStyle(
+                    color: Color(0xFF00523E),
+                    fontSize: 20,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w900,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
+                centerTitle: true,
+                backgroundColor: Colors.white,
+                elevation: 0,
               ),
-
               const SizedBox(height: 30),
 
               // Transaction Successful!
               const Text(
-                "Transaction Successful!",
+                "Transaction Processed!",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -90,21 +97,9 @@ class _SuccessPageState extends State<Success_Page> {
 
               const SizedBox(height: 10),
 
-              //Transaction Process
-              const Text(
-                "Transaction Processed",
-                style: TextStyle(
-                  color: Color(0xFF848484),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
               Text(
-                "${amountTransact}",
-                style: TextStyle(
+                amountTransact,
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 36,
                   fontWeight: FontWeight.w900
@@ -147,8 +142,8 @@ class _SuccessPageState extends State<Success_Page> {
                         ),
                         const SizedBox(width: 180),
                         // Student Number
-                        Text("${studentAccount.studNum}",
-                          style: TextStyle(
+                        Text(studentAccount.studNum,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontStyle: FontStyle.italic
@@ -171,13 +166,13 @@ class _SuccessPageState extends State<Success_Page> {
                     Row(
                       children: [
                         // Money Balance
-                        Text("\₱ ${studentAccount.balance}",
-                        style: TextStyle(
+                        Text("₱ ${studentAccount.balance}",
+                        style: const TextStyle(
                           color: Colors.white,
                               fontSize: 20,
                         ),),
                         
-                        SizedBox(width: 90),
+                        const SizedBox(width: 90),
                       ],
                     ),
                   ],
@@ -188,7 +183,7 @@ class _SuccessPageState extends State<Success_Page> {
 
               // Cash In Process
               const Text(
-                "Thank you for using Paytriot!",
+                "Redirecting..",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
@@ -199,17 +194,8 @@ class _SuccessPageState extends State<Success_Page> {
               const SizedBox(height: 30),
 
               // Continue Button
-              ElevatedButton(
-                child: const Text('Continue'),
-                onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WriteScan()));
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00523E),
-                  fixedSize: const Size(140, 40)
-                ),
-              ),
+              LoadingAnimationWidget.twoRotatingArc(
+                  color: const Color(0xFF00523E), size: 40),
 
               const SizedBox(height: 30),
 

@@ -5,7 +5,6 @@ import 'package:nfc_manager/nfc_manager.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:get_storage/get_storage.dart';
-import 'package:paytriot/pages/home_page.dart';
 import '../pages/transaction_page.dart';
 import '../NFC/NFC.dart';
 import '../Algorithms/AES.dart';
@@ -30,7 +29,7 @@ class _WriteScanState extends State<WriteScan> {
         for (NdefRecord record in records) {
           if (record.payload != null) {
             String encodedData = String.fromCharCodes(record.payload);
-            print('Encoded Data: $encodedData');
+            print('AES\nEncoded Data: $encodedData');
             try {
               String decryptedData =
                   decryptAES(encodedData); // Assuming decrypt returns a String
@@ -111,10 +110,7 @@ class _WriteScanState extends State<WriteScan> {
               icon: const BackButtonIcon(),
               color: Color(0xFF00523E),
               onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Home_Page()));
+                Navigator.pop(context);
               },
             ),
           ),

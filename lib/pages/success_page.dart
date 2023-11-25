@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:paytriot/pages/write_scan_page.dart';
+import 'package:get_storage/get_storage.dart';
+import '../DB/stud_acc_db.dart';
+import '../model/stud_acc.dart';
 
 class Success_Page extends StatefulWidget {
   @override
@@ -7,6 +10,35 @@ class Success_Page extends StatefulWidget {
 }
 
 class _SuccessPageState extends State<Success_Page> {
+  final box = GetStorage();
+  late StudAcc studentAccount= const StudAcc(studNum: '', lastName: '', firstName: '', middleName: '', balance: 0);
+  String amountTransact="";
+
+  void readStudAcc() async {
+    try {
+      final result = await StudAccDB.instance.readAcc(box.read('studNum'));
+      if (result != null) {
+        setState(() {
+          studentAccount = result;
+        });
+      } else {
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readStudAcc();
+    if (box.read('transact')=='CashIn'){
+      amountTransact="+ \₱${box.read('amount')}";
+    }
+    else if(box.read('transact')=='Purchase'){
+      amountTransact="- \₱${box.read('amount')}";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +90,9 @@ class _SuccessPageState extends State<Success_Page> {
 
               const SizedBox(height: 10),
 
-              // Cash In Process
+              //Transaction Process
               const Text(
-                "Cash-in Processed",
+                "Transaction Processed",
                 style: TextStyle(
                   color: Color(0xFF848484),
                   fontSize: 14,
@@ -70,8 +102,8 @@ class _SuccessPageState extends State<Success_Page> {
 
               const SizedBox(height: 10),
 
-              const Text(
-                "+₱500",
+              Text(
+                "${amountTransact}",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 36,
@@ -115,7 +147,7 @@ class _SuccessPageState extends State<Success_Page> {
                         ),
                         const SizedBox(width: 180),
                         // Student Number
-                        const Text("202131234",
+                        Text("${studentAccount.studNum}",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -136,25 +168,16 @@ class _SuccessPageState extends State<Success_Page> {
 
                     const SizedBox(height: 2), 
                     
-                    const Row(
+                    Row(
                       children: [
                         // Money Balance
-                        Text("\₱1,500.00",
+                        Text("\₱ ${studentAccount.balance}",
                         style: TextStyle(
                           color: Colors.white,
                               fontSize: 20,
                         ),),
                         
-                        SizedBox(width: 90), 
-
-                        // Student Number
-                        Text("Last updated 22 Nov. 2023",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 6,
-                            fontStyle: FontStyle.italic
-                          ),
-                        ),
+                        SizedBox(width: 90),
                       ],
                     ),
                   ],

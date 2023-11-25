@@ -3,13 +3,16 @@ import 'dart:convert';
 class NFCData {
   final String ID;
   final String FirstName;
-
-  NFCData({required this.ID,required this.FirstName});
+  final String MiddleName;
+  final String LastName;
+  NFCData({required this.ID,required this.FirstName, required this.MiddleName, required this.LastName});
 
   Map<String, dynamic> toMap() {
     return {
       'ID': ID,
       'FirstName': FirstName,
+      'MiddleName': MiddleName,
+      'LastName': LastName,
     };
   }
 
@@ -17,6 +20,8 @@ class NFCData {
     return NFCData(
       ID: map['ID'],
       FirstName: map['FirstName'],
+      MiddleName: map['MiddleName'],
+      LastName: map['LastName'],
     );
   }
 }

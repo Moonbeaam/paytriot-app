@@ -21,12 +21,9 @@ class _TransactionPageState extends State<Transaction_Page> {
           studentAccount = result;
         });
       } else {
-        // Handle the case when the result is null
-        // For example, you might want to set a default value or show an error message.
       }
     } catch (e) {
       print(e.toString());
-      // Handle the error, for example, show an error message.
     }
   }
 
@@ -124,16 +121,7 @@ class _TransactionPageState extends State<Transaction_Page> {
                               fontSize: 20,
                         ),),
                         
-                        SizedBox(width: 90), 
-
-                        // Student Number
-                        Text("Last updated 20 Nov. 2023",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 6,
-                            fontStyle: FontStyle.italic
-                          ),
-                        ),
+                        SizedBox(width: 90),
                       ],
                     ),
                   ],
@@ -151,6 +139,7 @@ class _TransactionPageState extends State<Transaction_Page> {
                   ),
                 ),
                 onPressed: () {
+                  box.write('transact', 'CashIn');
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CashInPage()));
                 },
                 style: OutlinedButton.styleFrom(
@@ -175,6 +164,7 @@ class _TransactionPageState extends State<Transaction_Page> {
                     fontWeight:  FontWeight.w900
                   ),),
                 onPressed: () {
+                  box.write('transact', 'Purchase');
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PurchasePage()));
                 },
                 style: OutlinedButton.styleFrom(

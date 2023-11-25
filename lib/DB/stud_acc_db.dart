@@ -25,7 +25,7 @@ class StudAccDB {
     final studNumType = ' TEXT PRIMARY KEY NOT NULL';
     final lastNameType = ' TEXT NOT NULL';
     final firstNameType = ' TEXT NOT NULL';
-    final middleNameType = ' TEXT NOT NULL';
+    final middleNameType = ' TEXT';
     final balanceType = ' INTEGER DEFAULT 0';
 
     await db.execute('''

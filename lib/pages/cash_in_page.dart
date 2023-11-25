@@ -137,6 +137,7 @@ class _CashInPageState extends State<CashInPage> {
               onSubmit: () {
                 cashInAmount = _myController.text;
                 cashIn();
+                box.write('amount', cashInAmount);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => Success_Page()));
               },

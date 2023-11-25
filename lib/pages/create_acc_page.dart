@@ -61,10 +61,13 @@ class _CreateAccPageState extends State<CreateAccPage> {
   }
 
   Widget buildStudNum() => TextFormField(
-        decoration: InputDecoration(
+          decoration: InputDecoration(
           labelText: 'Student Number',
+          labelStyle: TextStyle(
+            color: Colors.grey[600],
+          ),
           filled: true,
-          hintStyle: TextStyle(color: Colors.grey[800]),
+          hintStyle: TextStyle(color: Colors.grey[400]),
           hintText: "201234567",
           fillColor: Colors.white70,
           constraints: BoxConstraints(maxHeight: 56, maxWidth: 300),
@@ -82,8 +85,11 @@ class _CreateAccPageState extends State<CreateAccPage> {
   Widget buildLastName() => TextFormField(
         decoration: InputDecoration(
           labelText: 'Last Name',
+          labelStyle: TextStyle(
+            color: Colors.grey[600],
+          ),
           filled: true,
-          hintStyle: TextStyle(color: Colors.grey[800]),
+          hintStyle: TextStyle(color: Colors.grey[400]),
           hintText: "e.g. Salazar",
           fillColor: Colors.white70,
           constraints: BoxConstraints(maxHeight: 56, maxWidth: 300),
@@ -100,8 +106,11 @@ class _CreateAccPageState extends State<CreateAccPage> {
   Widget buildFirstName() => TextFormField(
         decoration: InputDecoration(
           labelText: 'First Name',
+          labelStyle: TextStyle(
+            color: Colors.grey[600],
+          ),
           filled: true,
-          hintStyle: TextStyle(color: Colors.grey[800]),
+          hintStyle: TextStyle(color: Colors.grey[400]),
           hintText: "e.g. Apollo Zeus",
           fillColor: Colors.white70,
           constraints: BoxConstraints(maxHeight: 56, maxWidth: 300),
@@ -118,8 +127,11 @@ class _CreateAccPageState extends State<CreateAccPage> {
   Widget buildMiddleName() => TextFormField(
         decoration: InputDecoration(
           labelText: 'Middle Name',
+          labelStyle: TextStyle(
+            color: Colors.grey[600],
+          ),
           filled: true,
-          hintStyle: TextStyle(color: Colors.grey[800]),
+          hintStyle: TextStyle(color: Colors.grey[400]),
           hintText: "e.g. Verano",
           fillColor: Colors.white70,
           constraints: BoxConstraints(maxHeight: 56, maxWidth: 300),

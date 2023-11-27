@@ -27,11 +27,11 @@ class _ViewAccPageState extends State<ViewAccPage> {
 
     setState(() {
       studentAccounts = sortedAccounts;
-      print("Unsorted");
+      print("-------Unsorted-------");
       for (StudAcc account in accounts) {
         print("${account.studNum}, ${account.balance}");
       }
-      print("Merge Sorted");
+      print("-----Merge Sorted-----");
       for (StudAcc account in studentAccounts) {
         print("${account.studNum}, ${account.balance}");
       }
@@ -70,6 +70,21 @@ class _ViewAccPageState extends State<ViewAccPage> {
 
     return result;
   }
+
+  Widget delButton(StudAcc account) => ElevatedButton(
+    child: const Text(
+      'Delete',
+    ),
+    style: ElevatedButton.styleFrom(
+      foregroundColor: Colors.white,
+      backgroundColor: Colors.red,
+      fixedSize: const Size(90, 40),
+    ),
+    onPressed: () async {
+      await StudAccDB.instance.delete(account.studNum);
+      loadStudentAccounts();
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +142,9 @@ class _ViewAccPageState extends State<ViewAccPage> {
                       DataColumn(
                         label: Text('Balance'),
                       ),
+                      DataColumn(
+                        label: Text(''),
+                      ),
                     ],
                     rows: studentAccounts
                         .map(
@@ -134,6 +152,7 @@ class _ViewAccPageState extends State<ViewAccPage> {
                             cells: <DataCell>[
                               DataCell(Text(account.studNum)),
                               DataCell(Text(account.balance.toString())),
+                              DataCell(delButton(account)),
                             ],
                           ),
                         )

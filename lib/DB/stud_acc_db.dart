@@ -82,7 +82,15 @@ class StudAccDB {
       whereArgs: [studNum],
     );
   }
+  Future<int> delete(String ID)async{
+    final db=await instance.database;
 
+    return await db.delete(
+      tableStudAcc,
+      where: '${StudAccFields.studNum}=?',
+      whereArgs: [ID],
+    );
+  }
   Future close() async {
     final db = await instance.database;
     db.close();

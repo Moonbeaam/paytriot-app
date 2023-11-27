@@ -90,17 +90,3 @@ class Huffman {
     return freq;
   }
 }
-
-void main() {
-  Huffman huffman = Huffman();
-  String message = 'Apollo';
-
-  // Encode the message using Huffman coding
-  String encodedMessage = huffman.encode(message);
-  print('Original message: $message');
-  print('Encoded message: $encodedMessage');
-
-  // Decode the encoded message
-  String decodedMessage = huffman.decode(encodedMessage, message);
-  print('Decoded message: $decodedMessage');
-}

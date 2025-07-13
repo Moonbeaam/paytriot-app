@@ -74,11 +74,14 @@ class _ViewAccPageState extends State<ViewAccPage> {
   Widget delButton(StudAcc account) => ElevatedButton(
     child: const Text(
       'Delete',
+      style: TextStyle(
+        fontSize: 12, // 👈 your desired size
+      ),
     ),
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white,
       backgroundColor: Colors.red,
-      fixedSize: const Size(90, 40),
+      fixedSize: const Size(95, 40),
     ),
     onPressed: () async {
       await StudAccDB.instance.delete(account.studNum);
